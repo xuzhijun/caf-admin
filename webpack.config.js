@@ -2,13 +2,13 @@ const resolve = require('path').resolve
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const url = require('url')
-const publicPath = '../'
+const publicPath = '../../'
 
 module.exports = (options = {}) => ({
   entry: {
     'vendor': './src/vendor',
     'api': './src/api',
-    'index': './src/page/index/index',
+    // 'index': './src/page/index/index',
     'resource/indexOld': './src/page/resource/indexOld',
     'resource/index': './src/page/resource/index',
     'menu/index': './src/page/menu/index',
@@ -68,13 +68,13 @@ module.exports = (options = {}) => ({
         names: ['api', 'vendor', 'manifest']
       }),
     // new HtmlWebpackPlugin({template: 'src/index.html'})
-    new HtmlWebpackPlugin({
-      title: '首页',
-      filename: 'html/index.html',
-      template: 'src/index.html',
-      inject: true,
-      chunks: ['index', 'api', 'vendor', 'manifest']
-    }),
+    // new HtmlWebpackPlugin({
+    //   title: '首页',
+    //   filename: 'html/index.html',
+    //   template: 'src/index.html',
+    //   inject: true,
+    //   chunks: ['index', 'api', 'vendor', 'manifest']
+    // }),
     new HtmlWebpackPlugin({
       title: '资源',
       filename: 'html/resource/index.html',
