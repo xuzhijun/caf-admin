@@ -1,0 +1,2244 @@
+{
+  "getFunctionTree": {
+    "data": [
+      {
+        "id": "5003000",
+        "leaf": false,
+        "nodes": [
+          {
+            "id": "5003400",
+            "leaf": true,
+            "nodes": null,
+            "name": "fdasfa",
+            "flag": null,
+            "type": "URL",
+            "functions": null,
+            "parentId": 5003000,
+            "url": "ssdfadfdfasfasd",
+            "code": "fsdfas",
+            "status": null
+          },
+          {
+            "id": "5003450",
+            "leaf": true,
+            "nodes": null,
+            "name": "哈哈哈哈",
+            "flag": null,
+            "type": "NODE",
+            "functions": null,
+            "parentId": 5003000,
+            "url": "dsfafsa",
+            "code": "gfdsgsd",
+            "status": null
+          },
+          {
+            "id": "5005054",
+            "leaf": true,
+            "nodes": null,
+            "name": "ziyuannode05233",
+            "flag": null,
+            "type": "NODE",
+            "functions": null,
+            "parentId": 5003000,
+            "url": null,
+            "code": "ziyuannode05233",
+            "status": null
+          },
+          {
+            "id": "5005056",
+            "leaf": true,
+            "nodes": null,
+            "name": "ziyuanothermenu",
+            "flag": null,
+            "type": "MENU",
+            "functions": null,
+            "parentId": 5003000,
+            "url": "html/ziyuanothermenu.html",
+            "code": "ziyuanothermenu",
+            "status": null
+          },
+          {
+            "id": "5005055",
+            "leaf": true,
+            "nodes": null,
+            "name": "menuziyuannode05234",
+            "flag": null,
+            "type": "MENU",
+            "functions": null,
+            "parentId": 5003000,
+            "url": "html/menuziyuannode05234",
+            "code": "menuziyuannode05234",
+            "status": null
+          },
+          {
+            "id": "5005058",
+            "leaf": true,
+            "nodes": null,
+            "name": "1233321",
+            "flag": null,
+            "type": "MENU",
+            "functions": null,
+            "parentId": 5003000,
+            "url": "abc/123.html",
+            "code": "123333",
+            "status": null
+          },
+          {
+            "id": "5005059",
+            "leaf": true,
+            "nodes": null,
+            "name": "node111111",
+            "flag": null,
+            "type": "NODE",
+            "functions": null,
+            "parentId": 5003000,
+            "url": null,
+            "code": "node1111111",
+            "status": null
+          },
+          {
+            "id": "5005060",
+            "leaf": true,
+            "nodes": null,
+            "name": "menu11111111",
+            "flag": null,
+            "type": "MENU",
+            "functions": null,
+            "parentId": 5003000,
+            "url": "menu11111111",
+            "code": "menu11111111",
+            "status": null
+          }
+        ],
+        "name": "张立立",
+        "flag": null,
+        "type": "NODE",
+        "functions": null,
+        "parentId": null,
+        "url": null,
+        "code": "ufff",
+        "status": null
+      },
+      {
+        "id": "5003050",
+        "leaf": false,
+        "nodes": [
+          {
+            "id": "5003250",
+            "leaf": false,
+            "nodes": [
+              {
+                "id": "5002041",
+                "leaf": false,
+                "nodes": [
+                  {
+                    "id": "5002040",
+                    "leaf": true,
+                    "nodes": null,
+                    "name": "测试数据ajax1",
+                    "flag": null,
+                    "type": "AJAX",
+                    "functions": null,
+                    "parentId": 5002041,
+                    "url": "test/ajax1",
+                    "code": "testAjax1",
+                    "status": null
+                  }
+                ],
+                "name": "测试数据url2",
+                "flag": null,
+                "type": "URL",
+                "functions": null,
+                "parentId": 5003250,
+                "url": "test/url2",
+                "code": "testUrl2",
+                "status": null
+              }
+            ],
+            "name": "eee",
+            "flag": null,
+            "type": "NODE",
+            "functions": null,
+            "parentId": 5003050,
+            "url": null,
+            "code": "eee",
+            "status": null
+          },
+          {
+            "id": "5003100",
+            "leaf": true,
+            "nodes": null,
+            "name": "333",
+            "flag": null,
+            "type": "MENU",
+            "functions": null,
+            "parentId": 5003050,
+            "url": "333",
+            "code": "333",
+            "status": null
+          }
+        ],
+        "name": "node节点",
+        "flag": null,
+        "type": "NODE",
+        "functions": null,
+        "parentId": null,
+        "url": "/test/node1",
+        "code": "node1",
+        "status": null
+      },
+      {
+        "id": "5005051",
+        "leaf": false,
+        "nodes": [
+          {
+            "id": "5005052",
+            "leaf": true,
+            "nodes": null,
+            "name": "nodelxblxb",
+            "flag": null,
+            "type": "MENU",
+            "functions": null,
+            "parentId": 5005051,
+            "url": "html/nodelxblxb",
+            "code": "nodelxblxb",
+            "status": null
+          }
+        ],
+        "name": "nodelxb",
+        "flag": null,
+        "type": "NODE",
+        "functions": null,
+        "parentId": null,
+        "url": null,
+        "code": "nodelxb",
+        "status": null
+      },
+      {
+        "id": "5002000",
+        "leaf": true,
+        "nodes": null,
+        "name": "admin首页",
+        "flag": null,
+        "type": "URL",
+        "functions": null,
+        "parentId": null,
+        "url": "adminIndex",
+        "code": "adminIndex",
+        "status": null
+      },
+      {
+        "id": "1001",
+        "leaf": false,
+        "nodes": [
+          {
+            "id": "5005050",
+            "leaf": true,
+            "nodes": null,
+            "name": "21212",
+            "flag": null,
+            "type": "MENU",
+            "functions": null,
+            "parentId": 1001,
+            "url": "1212121212",
+            "code": "1212",
+            "status": null
+          },
+          {
+            "id": "5002046",
+            "leaf": true,
+            "nodes": null,
+            "name": "数据字典",
+            "flag": null,
+            "type": "MENU",
+            "functions": null,
+            "parentId": 1001,
+            "url": "html/data.html",
+            "code": "category",
+            "status": null
+          },
+          {
+            "id": "5002045",
+            "leaf": true,
+            "nodes": null,
+            "name": "异常编码",
+            "flag": null,
+            "type": "MENU",
+            "functions": null,
+            "parentId": 1001,
+            "url": "html/code.html",
+            "code": "errorcode",
+            "status": null
+          },
+          {
+            "id": "5002044",
+            "leaf": true,
+            "nodes": null,
+            "name": "接口监控",
+            "flag": null,
+            "type": "MENU",
+            "functions": null,
+            "parentId": 1001,
+            "url": "html/log.html",
+            "code": "auditLog",
+            "status": null
+          },
+          {
+            "id": "5002043",
+            "leaf": true,
+            "nodes": null,
+            "name": "菜单管理",
+            "flag": null,
+            "type": "MENU",
+            "functions": null,
+            "parentId": 1001,
+            "url": "html/menu.html",
+            "code": "menu",
+            "status": null
+          },
+          {
+            "id": "5004000",
+            "leaf": true,
+            "nodes": null,
+            "name": "pantest",
+            "flag": null,
+            "type": "MENU",
+            "functions": null,
+            "parentId": 1001,
+            "url": "html/pantest.html",
+            "code": "test22",
+            "status": null
+          },
+          {
+            "id": "5005057",
+            "leaf": true,
+            "nodes": null,
+            "name": "111111",
+            "flag": null,
+            "type": "MENU",
+            "functions": null,
+            "parentId": 1001,
+            "url": "html/1111",
+            "code": "111111",
+            "status": null
+          }
+        ],
+        "name": "常用功能",
+        "flag": null,
+        "type": "NODE",
+        "functions": null,
+        "parentId": null,
+        "url": null,
+        "code": "commonFun",
+        "status": null
+      },
+      {
+        "id": "5002042",
+        "leaf": true,
+        "nodes": null,
+        "name": "测试数据url1",
+        "flag": null,
+        "type": "MENU",
+        "functions": null,
+        "parentId": null,
+        "url": "test/url1",
+        "code": "testUrl1",
+        "status": null
+      },
+      {
+        "id": "5002038",
+        "leaf": true,
+        "nodes": null,
+        "name": "测试数据ajax3",
+        "flag": null,
+        "type": "MENU",
+        "functions": null,
+        "parentId": null,
+        "url": "ajax",
+        "code": "testAjax3",
+        "status": null
+      },
+      {
+        "id": "5005061",
+        "leaf": true,
+        "nodes": null,
+        "name": "fsjdfla",
+        "flag": null,
+        "type": "NODE",
+        "functions": null,
+        "parentId": null,
+        "url": null,
+        "code": "lfasjlasdkfj",
+        "status": null
+      },
+      {
+        "id": "1000",
+        "leaf": false,
+        "nodes": [
+          {
+            "id": "5002049",
+            "leaf": true,
+            "nodes": null,
+            "name": "角色管理",
+            "flag": null,
+            "type": "MENU",
+            "functions": null,
+            "parentId": 1000,
+            "url": "html/juese.html",
+            "code": "role",
+            "status": null
+          },
+          {
+            "id": "5002048",
+            "leaf": true,
+            "nodes": null,
+            "name": "资源管理",
+            "flag": null,
+            "type": "MENU",
+            "functions": null,
+            "parentId": 1000,
+            "url": "html/functionTree.html",
+            "code": "function",
+            "status": null
+          },
+          {
+            "id": "5002047",
+            "leaf": true,
+            "nodes": null,
+            "name": "授权管理",
+            "flag": null,
+            "type": "MENU",
+            "functions": null,
+            "parentId": 1000,
+            "url": "html/permission.html",
+            "code": "permission",
+            "status": null
+          },
+          {
+            "id": "5002050",
+            "leaf": true,
+            "nodes": null,
+            "name": "用户管理",
+            "flag": null,
+            "type": "MENU",
+            "functions": null,
+            "parentId": 1000,
+            "url": "html/user.html",
+            "code": "user",
+            "status": null
+          },
+          {
+            "id": "5003300",
+            "leaf": true,
+            "nodes": null,
+            "name": "机构管理",
+            "flag": null,
+            "type": "MENU",
+            "functions": null,
+            "parentId": 1000,
+            "url": "html/organization.html",
+            "code": "org",
+            "status": null
+          },
+          {
+            "id": "5005001",
+            "leaf": true,
+            "nodes": null,
+            "name": "789",
+            "flag": null,
+            "type": "MENU",
+            "functions": null,
+            "parentId": 1000,
+            "url": "789.html",
+            "code": "789",
+            "status": null
+          },
+          {
+            "id": "5005053",
+            "leaf": true,
+            "nodes": null,
+            "name": "menu05231",
+            "flag": null,
+            "type": "MENU",
+            "functions": null,
+            "parentId": 1000,
+            "url": "html/menu05231",
+            "code": "menu05231",
+            "status": null
+          }
+        ],
+        "name": "系统管理",
+        "flag": null,
+        "type": "NODE",
+        "functions": null,
+        "parentId": null,
+        "url": null,
+        "code": "parent-sys",
+        "status": null
+      }
+    ]
+  },
+  "getFunctionParentIds": {
+    "data": [
+      {
+        "id": 5003000,
+        "name": "张立立",
+        "url": null,
+        "type": "NODE",
+        "code": "ufff",
+        "status": null,
+        "parentId": null,
+        "listFun": [],
+        "deletable": true
+      },
+      {
+        "id": 5003050,
+        "name": "node节点",
+        "url": "/test/node1",
+        "type": "NODE",
+        "code": "node1",
+        "status": null,
+        "parentId": null,
+        "listFun": [],
+        "deletable": true
+      },
+      {
+        "id": 5005051,
+        "name": "nodelxb",
+        "url": null,
+        "type": "NODE",
+        "code": "nodelxb",
+        "status": null,
+        "parentId": null,
+        "listFun": [],
+        "deletable": true
+      },
+      {
+        "id": 1001,
+        "name": "常用功能",
+        "url": null,
+        "type": "NODE",
+        "code": "commonFun",
+        "status": null,
+        "parentId": null,
+        "listFun": [],
+        "deletable": true
+      },
+      {
+        "id": 5003450,
+        "name": "哈哈哈哈",
+        "url": "dsfafsa",
+        "type": "NODE",
+        "code": "gfdsgsd",
+        "status": null,
+        "parentId": 5003000,
+        "listFun": [],
+        "deletable": true
+      },
+      {
+        "id": 5005054,
+        "name": "ziyuannode05233",
+        "url": null,
+        "type": "NODE",
+        "code": "ziyuannode05233",
+        "status": null,
+        "parentId": 5003000,
+        "listFun": [],
+        "deletable": true
+      },
+      {
+        "id": 5005061,
+        "name": "fsjdfla",
+        "url": null,
+        "type": "NODE",
+        "code": "lfasjlasdkfj",
+        "status": null,
+        "parentId": null,
+        "listFun": [],
+        "deletable": true
+      },
+      {
+        "id": 1000,
+        "name": "系统管理",
+        "url": null,
+        "type": "NODE",
+        "code": "parent-sys",
+        "status": null,
+        "parentId": null,
+        "listFun": [],
+        "deletable": true
+      },
+      {
+        "id": 5005059,
+        "name": "node111111",
+        "url": null,
+        "type": "NODE",
+        "code": "node1111111",
+        "status": null,
+        "parentId": 5003000,
+        "listFun": [],
+        "deletable": true
+      },
+      {
+        "id": 5003250,
+        "name": "eee",
+        "url": null,
+        "type": "NODE",
+        "code": "eee",
+        "status": null,
+        "parentId": 5003050,
+        "listFun": [],
+        "deletable": true
+      }
+    ]
+  },
+  "saveAddFunction": {
+    "type": "NODE",
+    "parentId": "",
+    "code": "1",
+    "name": "1",
+    "url": "1"
+  },
+  "saveEditFunction": {
+    "id": "1001",
+    "type": "NODE",
+    "parentId": "",
+    "code": "commonFun",
+    "name": "常用功能",
+    "url": "111"
+  },
+  "deleteFunction": {
+    "FunctionId": "5002042"
+  },
+  "getMenuTree": {
+    "data": [
+      {
+        "id": 100101,
+        "code": "commonsFuns",
+        "icon": "gears",
+        "label": "常用功能",
+        "name": null,
+        "parentId": null,
+        "leaf": false,
+        "nodes": [
+          {
+            "id": 100108,
+            "code": "auditLog",
+            "icon": "file text outlin",
+            "label": "审计日志",
+            "name": null,
+            "parentId": 100101,
+            "leaf": true,
+            "nodes": null
+          },
+          {
+            "id": 100107,
+            "code": "errorcode",
+            "icon": "bug",
+            "label": "异常编码",
+            "name": null,
+            "parentId": 100101,
+            "leaf": true,
+            "nodes": null
+          },
+          {
+            "id": 100109,
+            "code": "menu",
+            "icon": "list",
+            "label": "菜单管理",
+            "name": null,
+            "parentId": 100101,
+            "leaf": true,
+            "nodes": null
+          },
+          {
+            "id": 100110,
+            "code": "333",
+            "icon": "user",
+            "label": "333",
+            "name": null,
+            "parentId": 100101,
+            "leaf": true,
+            "nodes": null
+          },
+          {
+            "id": 100122,
+            "code": "test22",
+            "icon": "user",
+            "label": "pantest",
+            "name": null,
+            "parentId": 100101,
+            "leaf": true,
+            "nodes": null
+          },
+          {
+            "id": 100106,
+            "code": "category",
+            "icon": "book",
+            "label": "数据字典",
+            "name": null,
+            "parentId": 100101,
+            "leaf": true,
+            "nodes": null
+          }
+        ]
+      },
+      {
+        "id": 100100,
+        "code": "system",
+        "icon": "desktop",
+        "label": "系统管理",
+        "name": null,
+        "parentId": null,
+        "leaf": false,
+        "nodes": [
+          {
+            "id": 100121,
+            "code": "33",
+            "icon": "33",
+            "label": "潘昊测试",
+            "name": null,
+            "parentId": 100100,
+            "leaf": true,
+            "nodes": null
+          },
+          {
+            "id": 100111,
+            "code": "org",
+            "icon": "user",
+            "label": "机构管理",
+            "name": null,
+            "parentId": 100100,
+            "leaf": true,
+            "nodes": null
+          },
+          {
+            "id": 100102,
+            "code": "user",
+            "icon": "user",
+            "label": "用户管理",
+            "name": null,
+            "parentId": 100100,
+            "leaf": true,
+            "nodes": null
+          },
+          {
+            "id": 100103,
+            "code": "role",
+            "icon": "users",
+            "label": "角色管理",
+            "name": null,
+            "parentId": 100100,
+            "leaf": true,
+            "nodes": null
+          },
+          {
+            "id": 100104,
+            "code": "function",
+            "icon": "database",
+            "label": "资源管理",
+            "name": null,
+            "parentId": 100100,
+            "leaf": true,
+            "nodes": null
+          },
+          {
+            "id": 100105,
+            "code": "permission",
+            "icon": "users",
+            "label": "授权管理",
+            "name": null,
+            "parentId": 100100,
+            "leaf": true,
+            "nodes": null
+          }
+        ]
+      }
+    ]
+  },
+  "getParentIds": {
+    "data": [
+      {
+        "id": 100129,
+        "parentId": 100127,
+        "code": "1212",
+        "icon": null,
+        "label": "node05232",
+        "demoMenus": [
+          {
+            "id": 100131,
+            "parentId": 100129,
+            "code": "789",
+            "icon": null,
+            "label": "子菜单",
+            "demoMenus": []
+          },
+          {
+            "id": 100138,
+            "parentId": 100129,
+            "code": "fuceshi11111111",
+            "icon": "fuceshi11111111",
+            "label": "fuceshi11111111",
+            "demoMenus": []
+          }
+        ]
+      },
+      {
+        "id": 100108,
+        "parentId": 100101,
+        "code": "auditLog",
+        "icon": "file text outlin",
+        "label": "审计日志",
+        "demoMenus": []
+      },
+      {
+        "id": 100101,
+        "parentId": null,
+        "code": "commonsFuns",
+        "icon": "settings",
+        "label": "常用功能",
+        "demoMenus": [
+          {
+            "id": 100106,
+            "parentId": 100101,
+            "code": "category",
+            "icon": "book",
+            "label": "数据字典",
+            "demoMenus": []
+          },
+          {
+            "id": 100107,
+            "parentId": 100101,
+            "code": "errorcode",
+            "icon": "bug",
+            "label": "异常编码",
+            "demoMenus": []
+          },
+          {
+            "id": 100108,
+            "parentId": 100101,
+            "code": "auditLog",
+            "icon": "file text outlin",
+            "label": "审计日志",
+            "demoMenus": []
+          },
+          {
+            "id": 100109,
+            "parentId": 100101,
+            "code": "menu",
+            "icon": "list",
+            "label": "菜单管理",
+            "demoMenus": []
+          },
+          {
+            "id": 100110,
+            "parentId": 100101,
+            "code": "333",
+            "icon": "user",
+            "label": "333",
+            "demoMenus": []
+          },
+          {
+            "id": 100122,
+            "parentId": 100101,
+            "code": "test22",
+            "icon": "user",
+            "label": "pantest",
+            "demoMenus": []
+          },
+          {
+            "id": 100134,
+            "parentId": 100101,
+            "code": "menu05231",
+            "icon": "fsdjfas",
+            "label": "fasjkdfjkasl",
+            "demoMenus": []
+          },
+          {
+            "id": 100135,
+            "parentId": 100101,
+            "code": "ziyuanothermenu",
+            "icon": "user",
+            "label": "changyonggongneng",
+            "demoMenus": []
+          }
+        ]
+      },
+      {
+        "id": 100107,
+        "parentId": 100101,
+        "code": "errorcode",
+        "icon": "bug",
+        "label": "异常编码",
+        "demoMenus": []
+      },
+      {
+        "id": 100109,
+        "parentId": 100101,
+        "code": "menu",
+        "icon": "list",
+        "label": "菜单管理",
+        "demoMenus": []
+      },
+      {
+        "id": 100121,
+        "parentId": 100100,
+        "code": "33",
+        "icon": "33",
+        "label": "潘昊测试",
+        "demoMenus": []
+      },
+      {
+        "id": 100131,
+        "parentId": 100129,
+        "code": "789",
+        "icon": null,
+        "label": "子菜单",
+        "demoMenus": []
+      },
+      {
+        "id": 100133,
+        "parentId": null,
+        "code": "othermenu",
+        "icon": null,
+        "label": "其他菜单",
+        "demoMenus": []
+      },
+      {
+        "id": 100134,
+        "parentId": 100101,
+        "code": "menu05231",
+        "icon": "fsdjfas",
+        "label": "fasjkdfjkasl",
+        "demoMenus": []
+      },
+      {
+        "id": 100137,
+        "parentId": null,
+        "code": "zidingyi22222",
+        "icon": "zidingyi22222",
+        "label": "zidingyi22222",
+        "demoMenus": []
+      },
+      {
+        "id": 100138,
+        "parentId": 100129,
+        "code": "fuceshi11111111",
+        "icon": "fuceshi11111111",
+        "label": "fuceshi11111111",
+        "demoMenus": []
+      },
+      {
+        "id": 100111,
+        "parentId": 100100,
+        "code": "org",
+        "icon": "user",
+        "label": "机构管理",
+        "demoMenus": []
+      },
+      {
+        "id": 100110,
+        "parentId": 100101,
+        "code": "333",
+        "icon": "user",
+        "label": "333",
+        "demoMenus": []
+      },
+      {
+        "id": 100122,
+        "parentId": 100101,
+        "code": "test22",
+        "icon": "user",
+        "label": "pantest",
+        "demoMenus": []
+      },
+      {
+        "id": 100135,
+        "parentId": 100101,
+        "code": "ziyuanothermenu",
+        "icon": "user",
+        "label": "changyonggongneng",
+        "demoMenus": []
+      },
+      {
+        "id": 100102,
+        "parentId": 100100,
+        "code": "user",
+        "icon": "user",
+        "label": "用户管理",
+        "demoMenus": []
+      },
+      {
+        "id": 100103,
+        "parentId": 100100,
+        "code": "role",
+        "icon": "users",
+        "label": "角色管理",
+        "demoMenus": []
+      },
+      {
+        "id": 100100,
+        "parentId": null,
+        "code": "system",
+        "icon": "desktop",
+        "label": "系统管理",
+        "demoMenus": [
+          {
+            "id": 100102,
+            "parentId": 100100,
+            "code": "user",
+            "icon": "user",
+            "label": "用户管理",
+            "demoMenus": []
+          },
+          {
+            "id": 100103,
+            "parentId": 100100,
+            "code": "role",
+            "icon": "users",
+            "label": "角色管理",
+            "demoMenus": []
+          },
+          {
+            "id": 100104,
+            "parentId": 100100,
+            "code": "function",
+            "icon": "database",
+            "label": "资源管理",
+            "demoMenus": []
+          },
+          {
+            "id": 100105,
+            "parentId": 100100,
+            "code": "permission",
+            "icon": "users",
+            "label": "授权管理",
+            "demoMenus": []
+          },
+          {
+            "id": 100111,
+            "parentId": 100100,
+            "code": "org",
+            "icon": "user",
+            "label": "机构管理",
+            "demoMenus": []
+          },
+          {
+            "id": 100121,
+            "parentId": 100100,
+            "code": "33",
+            "icon": "33",
+            "label": "潘昊测试",
+            "demoMenus": []
+          },
+          {
+            "id": 100124,
+            "parentId": 100100,
+            "code": "777",
+            "icon": "34",
+            "label": "7878",
+            "demoMenus": []
+          }
+        ]
+      },
+      {
+        "id": 100104,
+        "parentId": 100100,
+        "code": "function",
+        "icon": "database",
+        "label": "资源管理",
+        "demoMenus": []
+      },
+      {
+        "id": 100105,
+        "parentId": 100100,
+        "code": "permission",
+        "icon": "users",
+        "label": "授权管理",
+        "demoMenus": []
+      },
+      {
+        "id": 100106,
+        "parentId": 100101,
+        "code": "category",
+        "icon": "book",
+        "label": "数据字典",
+        "demoMenus": []
+      },
+      {
+        "id": 100124,
+        "parentId": 100100,
+        "code": "777",
+        "icon": "34",
+        "label": "7878",
+        "demoMenus": []
+      },
+      {
+        "id": 100130,
+        "parentId": 100127,
+        "code": "nodelxblxb",
+        "icon": null,
+        "label": "candannode05233",
+        "demoMenus": []
+      },
+      {
+        "id": 100127,
+        "parentId": null,
+        "code": "node05232",
+        "icon": null,
+        "label": "node05232",
+        "demoMenus": [
+          {
+            "id": 100129,
+            "parentId": 100127,
+            "code": "1212",
+            "icon": null,
+            "label": "node05232",
+            "demoMenus": [
+              {
+                "id": 100131,
+                "parentId": 100129,
+                "code": "789",
+                "icon": null,
+                "label": "子菜单",
+                "demoMenus": []
+              },
+              {
+                "id": 100138,
+                "parentId": 100129,
+                "code": "fuceshi11111111",
+                "icon": "fuceshi11111111",
+                "label": "fuceshi11111111",
+                "demoMenus": []
+              }
+            ]
+          },
+          {
+            "id": 100130,
+            "parentId": 100127,
+            "code": "nodelxblxb",
+            "icon": null,
+            "label": "candannode05233",
+            "demoMenus": []
+          }
+        ]
+      },
+      {
+        "id": 100128,
+        "parentId": null,
+        "code": "p3",
+        "icon": "user",
+        "label": "父菜单",
+        "demoMenus": []
+      },
+      {
+        "id": 0,
+        "parentId": null,
+        "code": null,
+        "icon": null,
+        "label": "",
+        "demoMenus": null
+      }
+    ]
+  },
+  "getCodes": {
+    "data": [
+      {
+        "id": 5005062,
+        "name": "fkasjdlf",
+        "url": "fjsadlfjask",
+        "type": "MENU",
+        "code": "fjslkadfas",
+        "status": null,
+        "parentId": 5003000,
+        "listFun": [],
+        "deletable": true
+      },
+      {
+        "id": 5002042,
+        "name": "测试数据url1",
+        "url": "test/url1",
+        "type": "MENU",
+        "code": "testUrl1",
+        "status": null,
+        "parentId": null,
+        "listFun": [],
+        "deletable": true
+      },
+      {
+        "id": 5002038,
+        "name": "测试数据ajax3",
+        "url": "ajax",
+        "type": "MENU",
+        "code": "testAjax3",
+        "status": null,
+        "parentId": null,
+        "listFun": [],
+        "deletable": true
+      },
+      {
+        "id": 5005057,
+        "name": "111111",
+        "url": "html/1111",
+        "type": "MENU",
+        "code": "111111",
+        "status": null,
+        "parentId": 1001,
+        "listFun": [],
+        "deletable": true
+      },
+      {
+        "id": 5005055,
+        "name": "menuziyuannode05234",
+        "url": "html/menuziyuannode05234",
+        "type": "MENU",
+        "code": "menuziyuannode05234",
+        "status": null,
+        "parentId": 5003000,
+        "listFun": [],
+        "deletable": true
+      },
+      {
+        "id": 5005058,
+        "name": "1233321",
+        "url": "abc/123.html",
+        "type": "MENU",
+        "code": "123333",
+        "status": null,
+        "parentId": 5003000,
+        "listFun": [],
+        "deletable": true
+      },
+      {
+        "id": 5005060,
+        "name": "menu11111111",
+        "url": "menu11111111",
+        "type": "MENU",
+        "code": "menu11111111",
+        "status": null,
+        "parentId": 5003000,
+        "listFun": [],
+        "deletable": true
+      }
+    ]
+  },
+  "saveAddMenu": {
+    "code": "111",
+    "icon": "",
+    "label": "222",
+    "parentId": ""
+  },
+  "saveEditMenu": {
+    "id": "100101",
+    "code": "commonsFuns",
+    "icon": "cog",
+    "label": "常用功能",
+    "parentId": "100106"
+  },
+  "deleteMenu": {
+    "menuId": "100108"
+  },
+  "getOrgTree": {
+    "data": [
+      {
+        "leaf": false,
+        "nodes": [
+          {
+            "leaf": true,
+            "nodes": null,
+            "parentId": 5004350,
+            "id": "5000000",
+            "flag": null,
+            "code": "555",
+            "name": "打虎",
+            "status": "1"
+          }
+        ],
+        "parentId": null,
+        "id": "5004350",
+        "flag": null,
+        "code": "fasdfasf",
+        "name": "fasdfasd",
+        "status": "1"
+      },
+      {
+        "leaf": true,
+        "nodes": null,
+        "parentId": null,
+        "id": "5004351",
+        "flag": null,
+        "code": "werqwer",
+        "name": "rwasdfas",
+        "status": "1"
+      }
+    ]
+  },
+  "getOrgParentIds": {
+    "data": [
+      {
+        "id": 5000000,
+        "code": "555",
+        "name": "打虎",
+        "parentId": 5004350,
+        "status": "1",
+        "listOrg": [],
+        "deletable": true
+      },
+      {
+        "id": 5004350,
+        "code": "fasdfasf",
+        "name": "fasdfasd",
+        "parentId": null,
+        "status": "1",
+        "listOrg": [],
+        "deletable": true
+      },
+      {
+        "id": 5004351,
+        "code": "werqwer",
+        "name": "rwasdfas",
+        "parentId": null,
+        "status": "1",
+        "listOrg": [],
+        "deletable": true
+      }
+    ]
+  },
+  "saveAddOrg": {
+    "id": "",
+    "code": "",
+    "name": "",
+    "parentId": ""
+  },
+  "saveEditOrg": {
+    "id": "5004351",
+    "code": "werqwer",
+    "name": "rwasdfas",
+    "parentId": 5004350
+  },
+  "deleteOrg": {
+    "OrgId": "5004351"
+  },
+  "getAllrole": {
+    "data": [
+      {
+        "id": 1000,
+        "name": "测试用户",
+        "code": "test",
+        "orgCode": null,
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5004000,
+        "name": "swerwe",
+        "code": "1234212f",
+        "orgCode": "348230",
+        "deletable": true
+      },
+      {
+        "id": 5003000,
+        "name": "test1",
+        "code": "test1",
+        "orgCode": "348230",
+        "deletable": true
+      }
+    ]
+  },
+  "roleFunctionMarkList": {
+    "data": [
+      {
+        "id": "5003000",
+        "leaf": null,
+        "nodes": null,
+        "name": "张立立",
+        "flag": false,
+        "type": "NODE",
+        "functions": [
+          {
+            "id": "5005062",
+            "leaf": null,
+            "nodes": null,
+            "name": "fkasjdlf",
+            "flag": false,
+            "type": "MENU",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          },
+          {
+            "id": "5003400",
+            "leaf": null,
+            "nodes": null,
+            "name": "fdasfa",
+            "flag": false,
+            "type": "URL",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          },
+          {
+            "id": "5003450",
+            "leaf": null,
+            "nodes": null,
+            "name": "哈哈哈哈",
+            "flag": false,
+            "type": "NODE",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          },
+          {
+            "id": "5005054",
+            "leaf": null,
+            "nodes": null,
+            "name": "ziyuannode05233",
+            "flag": false,
+            "type": "NODE",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          },
+          {
+            "id": "5005056",
+            "leaf": null,
+            "nodes": null,
+            "name": "ziyuanothermenu",
+            "flag": false,
+            "type": "MENU",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          },
+          {
+            "id": "5005055",
+            "leaf": null,
+            "nodes": null,
+            "name": "menuziyuannode05234",
+            "flag": false,
+            "type": "MENU",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          },
+          {
+            "id": "5005058",
+            "leaf": null,
+            "nodes": null,
+            "name": "1233321",
+            "flag": false,
+            "type": "MENU",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          },
+          {
+            "id": "5005059",
+            "leaf": null,
+            "nodes": null,
+            "name": "node111111",
+            "flag": false,
+            "type": "NODE",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          },
+          {
+            "id": "5005060",
+            "leaf": null,
+            "nodes": null,
+            "name": "menu11111111",
+            "flag": false,
+            "type": "MENU",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          }
+        ],
+        "parentId": null,
+        "url": null,
+        "code": null,
+        "status": null
+      },
+      {
+        "id": "5003050",
+        "leaf": null,
+        "nodes": null,
+        "name": "node节点",
+        "flag": false,
+        "type": "NODE",
+        "functions": [
+          {
+            "id": "5003250",
+            "leaf": null,
+            "nodes": null,
+            "name": "eee",
+            "flag": false,
+            "type": "NODE",
+            "functions": [
+              {
+                "id": "5002041",
+                "leaf": null,
+                "nodes": null,
+                "name": "测试数据url2",
+                "flag": false,
+                "type": "URL",
+                "functions": [
+                  {
+                    "id": "5002040",
+                    "leaf": null,
+                    "nodes": null,
+                    "name": "测试数据ajax1",
+                    "flag": false,
+                    "type": "AJAX",
+                    "functions": null,
+                    "parentId": null,
+                    "url": null,
+                    "code": null,
+                    "status": null
+                  }
+                ],
+                "parentId": null,
+                "url": null,
+                "code": null,
+                "status": null
+              }
+            ],
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          },
+          {
+            "id": "5003100",
+            "leaf": null,
+            "nodes": null,
+            "name": "333",
+            "flag": true,
+            "type": "MENU",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          }
+        ],
+        "parentId": null,
+        "url": null,
+        "code": null,
+        "status": null
+      },
+      {
+        "id": "5005051",
+        "leaf": null,
+        "nodes": null,
+        "name": "nodelxb",
+        "flag": false,
+        "type": "NODE",
+        "functions": [
+          {
+            "id": "5005052",
+            "leaf": null,
+            "nodes": null,
+            "name": "nodelxblxb",
+            "flag": false,
+            "type": "MENU",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          }
+        ],
+        "parentId": null,
+        "url": null,
+        "code": null,
+        "status": null
+      },
+      {
+        "id": "5002000",
+        "leaf": null,
+        "nodes": null,
+        "name": "admin首页",
+        "flag": true,
+        "type": "URL",
+        "functions": null,
+        "parentId": null,
+        "url": null,
+        "code": null,
+        "status": null
+      },
+      {
+        "id": "1001",
+        "leaf": null,
+        "nodes": null,
+        "name": "常用功能",
+        "flag": false,
+        "type": "NODE",
+        "functions": [
+          {
+            "id": "5005050",
+            "leaf": null,
+            "nodes": null,
+            "name": "21212",
+            "flag": true,
+            "type": "MENU",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          },
+          {
+            "id": "5002046",
+            "leaf": null,
+            "nodes": null,
+            "name": "数据字典",
+            "flag": true,
+            "type": "MENU",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          },
+          {
+            "id": "5002045",
+            "leaf": null,
+            "nodes": null,
+            "name": "异常编码",
+            "flag": true,
+            "type": "MENU",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          },
+          {
+            "id": "5002044",
+            "leaf": null,
+            "nodes": null,
+            "name": "接口监控",
+            "flag": true,
+            "type": "MENU",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          },
+          {
+            "id": "5002043",
+            "leaf": null,
+            "nodes": null,
+            "name": "菜单管理",
+            "flag": true,
+            "type": "MENU",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          },
+          {
+            "id": "5004000",
+            "leaf": null,
+            "nodes": null,
+            "name": "pantest",
+            "flag": true,
+            "type": "MENU",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          },
+          {
+            "id": "5005057",
+            "leaf": null,
+            "nodes": null,
+            "name": "111111",
+            "flag": false,
+            "type": "MENU",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          }
+        ],
+        "parentId": null,
+        "url": null,
+        "code": null,
+        "status": null
+      },
+      {
+        "id": "5002042",
+        "leaf": null,
+        "nodes": null,
+        "name": "测试数据url1",
+        "flag": false,
+        "type": "MENU",
+        "functions": null,
+        "parentId": null,
+        "url": null,
+        "code": null,
+        "status": null
+      },
+      {
+        "id": "5002038",
+        "leaf": null,
+        "nodes": null,
+        "name": "测试数据ajax3",
+        "flag": true,
+        "type": "MENU",
+        "functions": null,
+        "parentId": null,
+        "url": null,
+        "code": null,
+        "status": null
+      },
+      {
+        "id": "5005061",
+        "leaf": null,
+        "nodes": null,
+        "name": "fsjdfla",
+        "flag": false,
+        "type": "NODE",
+        "functions": null,
+        "parentId": null,
+        "url": null,
+        "code": null,
+        "status": null
+      },
+      {
+        "id": "1000",
+        "leaf": null,
+        "nodes": null,
+        "name": "系统管理",
+        "flag": false,
+        "type": "NODE",
+        "functions": [
+          {
+            "id": "5002049",
+            "leaf": null,
+            "nodes": null,
+            "name": "角色管理",
+            "flag": true,
+            "type": "MENU",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          },
+          {
+            "id": "5002048",
+            "leaf": null,
+            "nodes": null,
+            "name": "资源管理",
+            "flag": true,
+            "type": "MENU",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          },
+          {
+            "id": "5002047",
+            "leaf": null,
+            "nodes": null,
+            "name": "授权管理",
+            "flag": true,
+            "type": "MENU",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          },
+          {
+            "id": "5002050",
+            "leaf": null,
+            "nodes": null,
+            "name": "用户管理",
+            "flag": true,
+            "type": "MENU",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          },
+          {
+            "id": "5003300",
+            "leaf": null,
+            "nodes": null,
+            "name": "机构管理",
+            "flag": true,
+            "type": "MENU",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          },
+          {
+            "id": "5005001",
+            "leaf": null,
+            "nodes": null,
+            "name": "789",
+            "flag": true,
+            "type": "MENU",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          },
+          {
+            "id": "5005053",
+            "leaf": null,
+            "nodes": null,
+            "name": "menu05231",
+            "flag": false,
+            "type": "MENU",
+            "functions": null,
+            "parentId": null,
+            "url": null,
+            "code": null,
+            "status": null
+          }
+        ],
+        "parentId": null,
+        "url": null,
+        "code": null,
+        "status": null
+      }
+    ]
+  },
+  "saveRoleAndFunction": {
+    "roleId": "1000",
+    "functionId": ""
+  },
+  "getPermission": {
+    "data": [
+      {
+        "id": 5002000,
+        "proName": "orgId",
+        "value": "1",
+        "deletable": true
+      },
+      {
+        "id": 5002001,
+        "proName": "orgId2",
+        "value": "1",
+        "deletable": true
+      }
+    ]
+  },
+  "savePermission": {
+    "addRoleFuncPermissions": [],
+    "deleteIds": [
+      5002000,
+      5002001
+    ]
+  }
+}
