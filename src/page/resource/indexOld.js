@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
-import App from './index1.vue'
+import App from './indexOld.vue'
 Vue.use(ElementUI)
 
 new Vue({

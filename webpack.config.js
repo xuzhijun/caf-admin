@@ -2,28 +2,28 @@ const resolve = require('path').resolve
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const url = require('url')
-const publicPath = ''
+const publicPath = '../'
 
 module.exports = (options = {}) => ({
   entry: {
     'vendor': './src/vendor',
     'api': './src/api',
     'index': './src/page/index/index',
-    'resource': './src/page/resource/index',
-    'resource1': './src/page/resource/index1',
-    'menu': './src/page/menu/index',
-    'org': './src/page/org/index',
-    'role': './src/page/role/index'
+    'resource/indexOld': './src/page/resource/indexOld',
+    'resource/index': './src/page/resource/index',
+    'menu/index': './src/page/menu/index',
+    'org/index': './src/page/org/index',
+    'role/index': './src/page/role/index'
 
   },
   output: {
     path: resolve(__dirname, 'dist'),
     filename: options.dev
       ? '[name].js'
-      : '[name].js?[chunkhash]',
+      : 'js/caf-vue/[name].js?[chunkhash]',
     chunkFilename: '[id].js?[chunkhash]',
     publicPath: options.dev
-      ? '/assets/'
+      ? '/'
       : publicPath
   },
   module: {
@@ -70,38 +70,38 @@ module.exports = (options = {}) => ({
     // new HtmlWebpackPlugin({template: 'src/index.html'})
     new HtmlWebpackPlugin({
       title: '首页',
-      filename: 'index.html',
+      filename: 'html/index.html',
       template: 'src/index.html',
       inject: true,
       chunks: ['index', 'api', 'vendor', 'manifest']
     }),
     new HtmlWebpackPlugin({
       title: '资源',
-      filename: 'resource.html',
+      filename: 'html/resource/index.html',
       template: 'src/index.html',
       inject: true,
-      chunks: ['resource1', 'api', 'vendor', 'manifest']
+      chunks: ['resource/index', 'api', 'vendor', 'manifest']
     }),
     new HtmlWebpackPlugin({
       title: '菜单',
-      filename: 'menu.html',
+      filename: 'html/menu/index.html',
       template: 'src/index.html',
       inject: true,
-      chunks: ['menu', 'api', 'vendor', 'manifest']
+      chunks: ['menu/index', 'api', 'vendor', 'manifest']
     }),
     new HtmlWebpackPlugin({
       title: '机构',
-      filename: 'org.html',
+      filename: 'html/org/index.html',
       template: 'src/index.html',
       inject: true,
-      chunks: ['org', 'api', 'vendor', 'manifest']
+      chunks: ['org/index', 'api', 'vendor', 'manifest']
     }),
     new HtmlWebpackPlugin({
       title: '授权',
-      filename: 'role.html',
+      filename: 'html/role/index.html',
       template: 'src/index.html',
       inject: true,
-      chunks: ['role', 'api', 'vendor', 'manifest']
+      chunks: ['role/index', 'api', 'vendor', 'manifest']
     })
   ],
   resolve: {

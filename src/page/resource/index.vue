@@ -1,15 +1,17 @@
 <template>
   <div id="app">
     <el-row>
-      <el-col :span="24">
-        <el-button icon="plus" @click="createNode">新增资源</el-button>
-        
+      <el-col :span="24" class="title">
+        <el-button-group>
+          <el-button type="primary" @click="createNode">新增</el-button>
+          <el-button type="primary" :disabled="checkModify" @click="modifyNode">修改</el-button>
+          <el-button type="primary" :disabled="checkRemove" @click="removeNode">删除</el-button>
+        </el-button-group>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="24">
-        <el-tree :data="treelist" empty-text="加载中..." node-key="id" ref="tree" highlight-current :props="defaultProps" :render-content="renderContent">
-        </el-tree>
+        <el-tree :data="treelist" empty-text="加载中..." node-key="id" ref="tree" highlight-current :props="defaultProps" :expand-on-click-node="false" @current-change="setCurrentChange" :render-content="renderContent"></el-tree>
       </el-col>
     </el-row>
     <el-dialog ref="resourceDialog" :title="dialogTitle" :visible.sync="dialogFormVisible" @close="initForm">
@@ -20,7 +22,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="父菜单" prop="parentId">
+        <el-form-item label="父菜单" prop="parentId" v-show="checkLeaf">
           <el-select v-model="form.parentId" placeholder="请选择">
             <el-option v-for="item in parentOptions" :disabled="form.id===item.id" :key="item.id" :label="item.name" :value="item.id">
             </el-option>
@@ -56,6 +58,7 @@ export default {
       },
       dialogFormVisible: false,
       isEdit: false,
+      currentData: null,
       form: {
         type: '',
         parentId: '',
@@ -190,24 +193,27 @@ export default {
       this.isEdit = false;
       this.openDialog();
     },
-    modifyNode(store, data) { // 修改节点
+    setCurrentChange(data) {
+      this.currentData = data;
+    },
+    modifyNode(data, node) { // 修改节点
       this.isEdit = true;
-      this.initForm(data);
+      this.initForm(this.currentData);
       this.openDialog();
     },
-    removeNode(store, data) { // 删除节点
+    removeNode() { // 删除节点
       let promise_confirm = this.$confirm('将删除该节点, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       });
       let promise_remove = Api.resource_delete({
-        'FunctionId': data.id
+        'FunctionId': this.currentData.id
       });
       Promise.all([promise_confirm, promise_remove])
         .then(([resConfirm, resRemove]) => {
           if (resRemove.code == '1') {
-            store.remove(data);
+            this.$refs.tree.store.remove(this.currentData);
             this.$message({
               type: 'success',
               message: resRemove.message
@@ -217,7 +223,7 @@ export default {
           }
         })
         .catch(err => {
-          let message = err == 'cancel' ? '取消删除': err.message;
+          let message = err == 'cancel' ? '取消删除' : err.message;
           this.$message({
             type: 'info',
             message: message
@@ -225,19 +231,29 @@ export default {
         });
     },
     renderContent(h, { node, data, store }) { // 渲染节点内容
-      return (
-        <span>
-          <span>{node.label}</span>
-          <span style="float: right; margin-right: 20px">
-            <el-button icon="edit" size="mini" on-click={() => this.modifyNode(store, data)}>修改</el-button>
-            <el-button v-show={node.isLeaf} icon="delete" size="mini" on-click={() => this.removeNode(store, data)}>删除</el-button>
-          </span>
-        </span>);
+      return (<span>{node.label}</span>);
+      // return (
+      //   <span>
+      //     <span>{node.label}</span>
+      //     <span style="float: right; margin-right: 20px">
+      //       <el-button icon="edit" size="mini" on-click={() => this.modifyNode(store, data)}>修改</el-button>
+      //       <el-button v-show={node.isLeaf} icon="delete" size="mini" on-click={() => this.removeNode(store, data)}>删除</el-button>
+      //     </span>
+      //   </span>);
     }
   },
   computed: {
     dialogTitle: function () {
       return this.isEdit ? '修改资源' : '新增资源'
+    },
+    checkModify: function () {
+      return this.currentData == null;
+    },
+    checkRemove: function () {
+      return !(this.currentData && this.currentData.leaf)
+    },
+    checkLeaf: function () {
+      return !this.isEdit || (this.isEdit && this.currentData.leaf)
     }
   },
   mounted() {
@@ -260,5 +276,11 @@ body {
 
 .el-form .el-select {
   display: block;
+}
+
+.el-col.title {
+  .el-button-group {
+    float: right;
+  }
 }
 </style>
