@@ -13,43 +13,39 @@
           </el-table>
         </div>
       </el-col>
+      <el-col :span="12" class="role-function">
+        <div class="title">
+          <span>功能</span>
+          <!--<el-button-group>
+              <el-button :disabled="functionBtn" type="primary" size="small" @click="functionCheckedSave">保存</el-button>
+              <el-button :disabled="functionBtn" type="primary" size="small" @click="functionRefresh">刷新</el-button>
+            </el-button-group>-->
+        </div>
+        <div class="content">
+          <el-tree v-loading="loading" :data="func.data" node-key="id" ref="functionTree" highlight-current show-checkbox current-node-key="id" :props="func.props" :render-content="renderFunctionContent" @current-change="functionCurrentChange"></el-tree>
+        </div>
+      </el-col>
       <el-col :span="12">
-        <el-row :gutter="24" type="flex" class="direction-column">
-          <el-col :span="24" class="role-function">
-            <div class="title">
-              <span>功能</span>
-              <el-button-group>
-                <el-button :disabled="functionBtn" type="primary" size="small" @click="functionCheckedSave">保存</el-button>
-                <el-button :disabled="functionBtn" type="primary" size="small" @click="functionRefresh">刷新</el-button>
-              </el-button-group>
-            </div>
-            <div class="content">
-              <el-tree :data="func.data" node-key="id" ref="functionTree" highlight-current show-checkbox current-node-key="id" :props="func.props" :render-content="renderFunctionContent" @current-change="functionCurrentChange"></el-tree>
-            </div>
-          </el-col>
-          <el-col :span="24">
-            <div class="title">
-              <span>机构</span>
-              <el-button-group>
-                <el-button :disabled="checkPermissionBtn" type="primary" size="small" @click="permissionAdd">新增</el-button>
-                <el-button :disabled="checkPermissionBtn" type="primary" size="small" @click="permissionSave">保存</el-button>
-                <el-button :disabled="checkPermissionBtn" type="primary" size="small" @click="permissionRefresh">刷新</el-button>
-              </el-button-group>
-            </div>
-            <div class="content">
-              <el-table stripe border ref="permissionTable" :data="permissionData" style="width: 100%" highlight-current-row>
-                <el-table-column prop="proName" label="属性名"></el-table-column>
-                <el-table-column prop="value" label="属性值"></el-table-column>
-                <el-table-column label="操作" width="150">
-                  <template scope="scope">
-                    <el-button size="small" @click="permissionEdit(scope.$index, scope.row)">编辑</el-button>
-                    <el-button size="small" type="danger" @click="permissionDelete(scope.$index, scope.row, permissionData)">删除</el-button>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </div>
-          </el-col>
-        </el-row>
+        <div class="title">
+          <span>机构</span>
+          <el-button-group>
+            <el-button :disabled="checkPermissionBtn" type="primary" size="small" @click="permissionAdd">新增</el-button>
+            <el-button :disabled="checkPermissionBtn" type="primary" size="small" @click="permissionSave">保存</el-button>
+            <el-button :disabled="checkPermissionBtn" type="primary" size="small" @click="permissionRefresh">刷新</el-button>
+          </el-button-group>
+        </div>
+        <div class="content">
+          <el-table stripe border ref="permissionTable" :data="permissionData" style="width: 100%" highlight-current-row>
+            <el-table-column prop="proName" label="属性名"></el-table-column>
+            <el-table-column prop="value" label="属性值"></el-table-column>
+            <el-table-column label="操作" width="150">
+              <template scope="scope">
+                <el-button size="small" @click="permissionEdit(scope.$index, scope.row)">编辑</el-button>
+                <el-button size="small" type="danger" @click="permissionDelete(scope.$index, scope.row, permissionData)">删除</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
       </el-col>
     </el-row>
     <el-dialog title="机构" :visible.sync="dialogFormVisible" @close="initPermissionForm">
@@ -75,6 +71,7 @@ export default {
   data() {
     return {
       dialogFormVisible: false,
+      loading: false,
       role: {
         data: [],
         current: {}
@@ -152,26 +149,26 @@ export default {
     },
     /* 功能 */
     initFunction(roleId) { // 初始化 function 树
+      this.loading = true;
       Api.role_function_list({
         'roleId': roleId
       })
         .then(res => {// 填充 function 数据
           this.func.data = res.data;
-        })
-        .then(res => {// 获取 function 中勾选的节点（叶子结点）
-          this.initFunctionChecked(this.func.data);
-        })
-        .then(res => {
+          this.initFunctionChecked(this.func.data);// 获取 function 中勾选的节点（叶子结点）
           this.$refs.functionTree.setCheckedKeys(this.func.checked);
-        })
-        .then(res => {// 清空相关数据
           this.func.current = null;
-          this.initPermission();
+          this.initPermission();// 清空相关数据
+          setTimeout(() => {
+            this.loading = false;
+          }, 500);
+        })
+        .catch(()=> {
+          this.loading = false;
         });
     },
     renderFunctionContent(h, { node, data, store }) { // 渲染 功能树的节点内容
-      return (
-        <span>{node.label}</span>);
+      return (<span>{node.label}</span>);
     },
     initFunctionChecked(list) { // 初始化 功能树的勾选状态
       if (list == null || list.length == 0) {
@@ -198,7 +195,7 @@ export default {
           'functionId': _checked.join(',')
         })
           .then(res => {
-            console.log(res);
+            // console.log(res);
             if (res.code == '1') {
               this.$message({
                 type: 'success',
@@ -213,7 +210,7 @@ export default {
           })
           .catch(err => {
             // error code
-            console.log(err);
+            // console.log(err);
             this.$message({
               type: 'info',
               message: err.message
@@ -361,15 +358,13 @@ body {
   align-items: stretch;
   .el-col {
     overflow: auto;
-    position: relative;
-    padding-top: 30px;
     .title {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      margin: 0 12px;
-      line-height: 30px;
+      display: flex;
+      padding: 10px 0;
+      align-items: center;
+      span {
+        flex-grow: 1;
+      }
       .el-button-group {
         float: right;
       }

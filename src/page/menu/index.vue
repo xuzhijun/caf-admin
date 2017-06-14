@@ -1,13 +1,16 @@
 <template>
   <div id="app">
     <el-row>
-      <el-col :span="24">
-        <el-button icon="plus" @click="createNode">新增菜单</el-button>
+      <el-col :span="24" class="title">
+        <span>菜单</span>
+        <el-button-group>
+          <el-button type="primary" @click="createNode">新增</el-button>
+          <el-button type="primary" :disabled="isModify" @click="modifyNode">修改</el-button>
+          <el-button type="primary" :disabled="isRemove" @click="removeNode">删除</el-button>
+        </el-button-group>
       </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="24">
-        <el-tree :data="treelist" node-key="id" ref="tree" highlight-current :props="defaultProps" :render-content="renderContent">
+      <el-col :span="24" class="content">
+        <el-tree :data="treelist" node-key="id" ref="tree" highlight-current :props="defaultProps" :render-content="renderContent" :expand-on-click-node="false" @current-change="setCurrentChange">
         </el-tree>
       </el-col>
     </el-row>
@@ -16,16 +19,16 @@
         <el-form-item v-show="!isEdit" label="父节点">
           <el-switch v-model="form.isParent" on-text="是" off-text="否"></el-switch>
         </el-form-item>
-        <el-form-item label="父菜单" v-show="checkLeaf" prop="parentId">
+        <el-form-item label="父菜单" v-show="isLeaf" prop="parentId">
           <el-select v-model="form.parentId" placeholder="请选择">
             <el-option v-for="item in parentOptions" :disabled="form.id===item.id" :key="item.id" :label="item.label" :value="item.id">
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="自定义编码" prop="codeInput" required v-show='isParent && !isEdit'>
+        <el-form-item label="自定义编码" prop="codeInput" required v-show='!isEdit && form.isParent'>
           <el-input v-model="form.codeInput"></el-input>
         </el-form-item>
-        <el-form-item label="编码" prop="codeSelect" required v-show='!isParent && !isEdit'>
+        <el-form-item label="编码" prop="codeSelect" required v-show='!isEdit && !form.isParent'>
           <el-select v-model="form.codeSelect" placeholder="请选择">
             <el-option v-for="item in codeOptions" :key="item.id" :label="item.name" :value="item.id">
             </el-option>
@@ -73,8 +76,6 @@ export default {
       dialogFormVisible: false,
       isEdit: false,
       currentData: null,
-      codeSelect: '',
-      codeInput: '',
       form: {
         isParent: true,
         id: '',
@@ -102,9 +103,15 @@ export default {
   },
   computed: {
     checkCodeField: function () {
-      return this.isParent && !this.isEdit
+      return this.form.isParent && !this.isEdit
     },
-    checkLeaf: function () {
+    isModify: function () { // 修改按钮状态
+      return this.currentData == null;
+    },
+    isRemove: function () { // 删除按钮状态
+      return !(this.currentData && this.currentData.leaf)
+    },
+    isLeaf: function () { // 新增状态，或者编辑状态下的叶子节点，可以显示父菜单下拉框
       return !this.isEdit || (this.isEdit && this.currentData.leaf)
     }
   },
@@ -125,8 +132,8 @@ export default {
       parentId = ''
     } = {}, isEdit = false, isParent = true) {
       this.$refs['menuForm'] && this.$refs['menuForm'].resetFields();
-      this.isParent = isParent;
       this.isEdit = isEdit;
+      this.form.isParent = isParent;
       this.form.id = id;
       this.form.codeInput = code;
       this.form.codeSelect = code;
@@ -137,7 +144,7 @@ export default {
     submitForm() {
       this.$refs['menuForm'].validate((valid) => {
         if (valid) {
-          let _code = this.isParent ? this.form.codeInput : this.form.codeSelect;
+          let _code = this.form.isParent ? this.form.codeInput : this.form.codeSelect;
           let _promise = this.isEdit ? Api.menu_edit({
             id: this.form.id,
             code: _code,
@@ -203,25 +210,28 @@ export default {
       this.isEdit = false;
       this.openDialog();
     },
-    modifyNode(store, data) { // 修改节点
-      console.log(data);
+    modifyNode() { // 修改节点      
       this.isEdit = true;
-      this.initForm(data, this.isEdit);
+      this.initForm(this.currentData, this.isEdit);
       this.openDialog();
     },
-    removeNode(store, data) { // 删除节点
-      let promise_confirm = this.$confirm('将删除该节点, 是否继续?', '提示', {
+    removeNode() { // 删除节点
+      this.$confirm('将删除该节点, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      });
-      let promise_remove = Api.menu_delete({
-        'menuId': data.id
-      });
-      Promise.all([promise_confirm, promise_remove])
-        .then(([resConfirm, resRemove]) => {
+      })
+        .then(resConfirm => {
+          if (resConfirm == 'confirm') {
+            Api.menu_delete({
+              'menuId': this.currentData.id
+            });
+          }
+        })
+        .then(resRemove => {
           if (resRemove.code == '1') {
-            store.remove(data);
+            this.$refs.tree.store.remove(this.currentData);
+            this.currentData = null;
             this.$message({
               type: 'success',
               message: resRemove.message
@@ -238,15 +248,19 @@ export default {
           });
         });
     },
+    setCurrentChange(data) {
+      this.currentData = data;
+    },
     renderContent(h, { node, data, store }) { // 渲染节点内容
-      return (
-        <span>
-          <span>{node.label}</span>
-          <span style="float: right; margin-right: 20px">
-            <el-button icon="edit" size="mini" on-click={() => this.modifyNode(store, data)}>修改</el-button>
-            <el-button v-show={node.isLeaf} icon="delete" size="mini" on-click={() => this.removeNode(store, data)}>删除</el-button>
-          </span>
-        </span>);
+      return (<span>{node.label}</span>);
+      // return (
+      //   <span>
+      //     <span>{node.label}</span>
+      //     <span style="float: right; margin-right: 20px">
+      //       <el-button icon="edit" size="mini" on-click={() => this.modifyNode(store, data)}>修改</el-button>
+      //       <el-button v-show={node.isLeaf} icon="delete" size="mini" on-click={() => this.removeNode(store, data)}>删除</el-button>
+      //     </span>
+      //   </span>);
     }
   },
   mounted() {
@@ -271,5 +285,19 @@ body {
 
 .el-form .el-select {
   display: block;
+}
+
+.el-col {
+  &.title {
+    display: flex;
+    padding: 10px 0;
+    align-items: center;
+    span {
+      flex-grow: 1;
+    }
+    .el-button-group {
+      float: right;
+    }
+  }
 }
 </style>

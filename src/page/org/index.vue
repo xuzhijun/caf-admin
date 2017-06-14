@@ -1,13 +1,16 @@
 <template>
   <div id="app">
     <el-row>
-      <el-col :span="24">
-        <el-button icon="plus" @click="createNode">新增机构</el-button>
+      <el-col :span="24" class="title">
+        <span>机构</span>
+        <el-button-group>
+          <el-button type="primary" @click="createNode">新增</el-button>
+          <el-button type="primary" :disabled="isModify" @click="modifyNode">修改</el-button>
+          <el-button type="primary" :disabled="isRemove" @click="removeNode">删除</el-button>
+        </el-button-group>
       </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="24">
-        <el-tree :data="treelist" node-key="id" ref="tree" highlight-current :props="defaultProps" :render-content="renderContent">
+      <el-col :span="24" class="content">
+        <el-tree :data="treelist" node-key="id" ref="tree" highlight-current :props="defaultProps" :render-content="renderContent" :expand-on-click-node="false" @current-change="setCurrentChange">
         </el-tree>
       </el-col>
     </el-row>
@@ -46,7 +49,7 @@ export default {
       },
       dialogFormVisible: false,
       isEdit: false,
-      isLeaf: true,
+      currentData: null,
       form: {
         id: '',
         code: '',
@@ -65,7 +68,15 @@ export default {
     }
   },
   computed: {
-
+    isModify: function () { // 修改按钮状态
+      return this.currentData == null;
+    },
+    isRemove: function () { // 删除按钮状态
+      return !(this.currentData && this.currentData.leaf)
+    },
+    isLeaf: function () { // 新增状态，或者编辑状态下的叶子节点，可以显示父菜单下拉框
+      return !this.isEdit || (this.isEdit && this.currentData.leaf)
+    }
   },
   methods: {
     /* Dialog */
@@ -81,10 +92,9 @@ export default {
       parentId = '',
       name = '',
       code = ''
-    } = {}, isEdit = false, isLeaf = true) {
+    } = {}, isEdit = false) {
       this.$refs['orgForm'] && this.$refs['orgForm'].resetFields();
       this.isEdit = isEdit;
-      this.isLeaf = isLeaf;
       this.form.id = id;
       this.form.parentId = parentId;
       this.form.name = name;
@@ -138,44 +148,57 @@ export default {
       this.isEdit = false;
       this.openDialog();
     },
-    modifyNode(store, data) { // 修改节点
+    modifyNode() { // 修改节点
       this.isEdit = true;
-      this.initForm(data, this.isEdit, data.leaf);
+      this.initForm(this.currentData, this.isEdit);
       this.openDialog();
     },
-    removeNode(store, data) { // 删除节点
-      Api.org_delete({
-        'OrgId': data.id
+    removeNode() { // 删除节点
+      this.$confirm('将删除该节点, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
-        .then(res => {
-          // console.log(res);
-          if (res.code == '1') {
-            store.remove(data);
+        .then(resConfirm => {
+          if (resConfirm == 'confirm') {
+            Api.org_delete({
+              'OrgId': this.currentData.id
+            });
+          }
+        })
+        .then(resRemove => {
+          if (resRemove.code == '1') {
+            this.$refs.tree.store.remove(this.currentData);
+            this.currentData = null;
             this.$message({
               type: 'success',
-              message: res.message
+              message: resRemove.message
             });
           } else {
-            throw new Error(res.message);
+            throw new Error(resRemove.message);
           }
         })
         .catch(err => {
-          // error code
+          let message = err == 'cancel' ? '取消删除' : err.message;
           this.$message({
             type: 'info',
-            message: err.message
+            message: message
           });
         });
     },
+    setCurrentChange(data) {
+      this.currentData = data;
+    },
     renderContent(h, { node, data, store }) { // 渲染节点内容
-      return (
-        <span>
-          <span>{node.label}</span>
-          <span style="float: right; margin-right: 20px">
-            <el-button icon="edit" size="mini" on-click={() => this.modifyNode(store, data)}>修改</el-button>
-            <el-button v-show={node.isLeaf} icon="delete" size="mini" on-click={() => this.removeNode(store, data)}>删除</el-button>
-          </span>
-        </span>);
+      return (<span>{node.label}</span>);
+      // return (
+      //   <span>
+      //     <span>{node.label}</span>
+      //     <span style="float: right; margin-right: 20px">
+      //       <el-button icon="edit" size="mini" on-click={() => this.modifyNode(store, data)}>修改</el-button>
+      //       <el-button v-show={node.isLeaf} icon="delete" size="mini" on-click={() => this.removeNode(store, data)}>删除</el-button>
+      //     </span>
+      //   </span>);
     }
   },
   mounted() {
@@ -199,5 +222,19 @@ body {
 
 .el-form .el-select {
   display: block;
+}
+
+.el-col {
+  &.title {
+    display: flex;
+    padding: 10px 0;
+    align-items: center;
+    span {
+      flex-grow: 1;
+    }
+    .el-button-group {
+      float: right;
+    }
+  }
 }
 </style>

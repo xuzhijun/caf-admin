@@ -2,15 +2,14 @@
   <div id="app">
     <el-row>
       <el-col :span="24" class="title">
+        <span>资源</span>
         <el-button-group>
           <el-button type="primary" @click="createNode">新增</el-button>
-          <el-button type="primary" :disabled="checkModify" @click="modifyNode">修改</el-button>
-          <el-button type="primary" :disabled="checkRemove" @click="removeNode">删除</el-button>
+          <el-button type="primary" :disabled="isModify" @click="modifyNode">修改</el-button>
+          <el-button type="primary" :disabled="isRemove" @click="removeNode">删除</el-button>
         </el-button-group>
       </el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="24">
+      <el-col :span="24" class="content">
         <el-tree :data="treelist" empty-text="加载中..." node-key="id" ref="tree" highlight-current :props="defaultProps" :expand-on-click-node="false" @current-change="setCurrentChange" :render-content="renderContent"></el-tree>
       </el-col>
     </el-row>
@@ -22,7 +21,7 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="父菜单" prop="parentId" v-show="checkLeaf">
+        <el-form-item label="父菜单" prop="parentId" v-show="isLeaf">
           <el-select v-model="form.parentId" placeholder="请选择">
             <el-option v-for="item in parentOptions" :disabled="form.id===item.id" :key="item.id" :label="item.name" :value="item.id">
             </el-option>
@@ -193,27 +192,28 @@ export default {
       this.isEdit = false;
       this.openDialog();
     },
-    setCurrentChange(data) {
-      this.currentData = data;
-    },
-    modifyNode(data, node) { // 修改节点
+    modifyNode() { // 修改节点
       this.isEdit = true;
       this.initForm(this.currentData);
       this.openDialog();
     },
     removeNode() { // 删除节点
-      let promise_confirm = this.$confirm('将删除该节点, 是否继续?', '提示', {
+      this.$confirm('将删除该节点, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
-      });
-      let promise_remove = Api.resource_delete({
-        'FunctionId': this.currentData.id
-      });
-      Promise.all([promise_confirm, promise_remove])
-        .then(([resConfirm, resRemove]) => {
+      })
+        .then(resConfirm => {
+          if (resConfirm == 'confirm') {
+            Api.resource_delete({
+              'FunctionId': this.currentData.id
+            });
+          }
+        })
+        .then(resRemove => {
           if (resRemove.code == '1') {
             this.$refs.tree.store.remove(this.currentData);
+            this.currentData = null;
             this.$message({
               type: 'success',
               message: resRemove.message
@@ -230,6 +230,9 @@ export default {
           });
         });
     },
+    setCurrentChange(data) {
+      this.currentData = data;
+    },
     renderContent(h, { node, data, store }) { // 渲染节点内容
       return (<span>{node.label}</span>);
       // return (
@@ -243,16 +246,16 @@ export default {
     }
   },
   computed: {
-    dialogTitle: function () {
+    dialogTitle: function () { // 动态 Dialog 标题
       return this.isEdit ? '修改资源' : '新增资源'
     },
-    checkModify: function () {
+    isModify: function () { // 修改按钮状态
       return this.currentData == null;
     },
-    checkRemove: function () {
+    isRemove: function () { // 删除按钮状态
       return !(this.currentData && this.currentData.leaf)
     },
-    checkLeaf: function () {
+    isLeaf: function () { // 新增状态，或者编辑状态下的叶子节点，可以显示父菜单下拉框
       return !this.isEdit || (this.isEdit && this.currentData.leaf)
     }
   },
@@ -278,9 +281,17 @@ body {
   display: block;
 }
 
-.el-col.title {
-  .el-button-group {
-    float: right;
+.el-col {
+  &.title {
+    display: flex;
+    padding: 10px 0;
+    align-items: center;
+    span {
+      flex-grow: 1;
+    }
+    .el-button-group {
+      float: right;
+    }
   }
 }
 </style>

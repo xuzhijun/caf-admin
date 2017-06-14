@@ -608,7 +608,7 @@
     "url": "111"
   },
   "deleteFunction": {
-    "FunctionId": "5002042"
+    "menuId": "100121"
   },
   "getMenuTree": {
     "data": [
@@ -1235,9 +1235,7 @@
     "label": "常用功能",
     "parentId": "100106"
   },
-  "deleteMenu": {
-    "menuId": "100108"
-  },
+  "deleteMenu": {},
   "getOrgTree": {
     "data": [
       {
