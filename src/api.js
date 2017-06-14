@@ -6,7 +6,7 @@ export function fetch(url = '', data = {}, type = 'GET', config = {}) {
     let requestConfig = {
         'url': url,
         'method': type,
-        'baseURL': '/caf-template-admin/',
+        // 'baseURL': '/caf-template-admin/',
         'headers': {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
         }
