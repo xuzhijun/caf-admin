@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --env.dev",
     "build": "rimraf dist && webpack -p --progress --hide-modules",
-    "mock": "node_modules/.bin/json-server --watch src/mock/db.json --port 9090",
+    "mock": "json-server src/mock/db.json",
     "mockdev": "npm run mock & npm run dev"
   },
   "dependencies": {
