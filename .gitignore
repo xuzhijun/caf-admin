@@ -1,5 +1,6 @@
-.DS_Store
+e.DS_Store
 node_modules/
 dist/
 npm-debug.log
 .idea
+n.vscode

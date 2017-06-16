@@ -1,6 +1,11 @@
-const resolve = require('path').resolve
+const path = require('path')
 const webpack = require('webpack')
+const ZipPlugin = require('zip-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const extractCSS = new ExtractTextPlugin('css/caf-vue/style.css');
+const extractSASS = new ExtractTextPlugin('css/caf-vue/icon.css');
+// 创建多个实例
 const url = require('url')
 const publicPath = '../../'
 
@@ -9,7 +14,7 @@ module.exports = (options = {}) => ({
     'vendor': './src/vendor',
     'api': './src/api',
     // 'index': './src/page/index/index',
-    'resource/indexOld': './src/page/resource/indexOld',
+    // 'resource/indexOld': './src/page/resource/indexOld',
     'resource/index': './src/page/resource/index',
     'menu/index': './src/page/menu/index',
     'org/index': './src/page/org/index',
@@ -17,10 +22,10 @@ module.exports = (options = {}) => ({
 
   },
   output: {
-    path: resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist'),
     filename: options.dev
       ? '[name].js'
-      : 'js/caf-vue/[name].js?[chunkhash]',
+      : 'js/caf-vue/[name].js',
     chunkFilename: '[id].js?[chunkhash]',
     publicPath: options.dev
       ? '/'
@@ -47,7 +52,18 @@ module.exports = (options = {}) => ({
         exclude: /node_modules/
       }, {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader']
+        // use: ['style-loader', 'css-loader', 'postcss-loader'],
+        use: extractCSS.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'postcss-loader']
+        })
+      }, {
+        test: /\.scss$/,
+        // use: ['style-loader', 'css-loader', 'sass-loader']
+        use: extractSASS.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader']
+        })
       }, {
         test: /\.(png|jpg|jpeg|gif|eot|ttf|woff|woff2|svg|svgz)(\?.+)?$/,
         use: [
@@ -67,14 +83,9 @@ module.exports = (options = {}) => ({
       .CommonsChunkPlugin({
         names: ['api', 'vendor', 'manifest']
       }),
-    // new HtmlWebpackPlugin({template: 'src/index.html'})
-    // new HtmlWebpackPlugin({
-    //   title: '首页',
-    //   filename: 'html/index.html',
-    //   template: 'src/index.html',
-    //   inject: true,
-    //   chunks: ['index', 'api', 'vendor', 'manifest']
-    // }),
+    // new HtmlWebpackPlugin({template: 'src/index.html'}) new HtmlWebpackPlugin({
+    // title: '首页',   filename: 'html/index.html',   template: 'src/index.html',
+    // inject: true,   chunks: ['index', 'api', 'vendor', 'manifest'] }),
     new HtmlWebpackPlugin({
       title: '资源',
       filename: 'html/resource/index.html',
@@ -102,11 +113,14 @@ module.exports = (options = {}) => ({
       template: 'src/index.html',
       inject: true,
       chunks: ['role/index', 'api', 'vendor', 'manifest']
-    })
+    }),
+    new ZipPlugin({filename: 'dist.zip'}),
+    extractCSS,
+    extractSASS
   ],
   resolve: {
     alias: {
-      '~': resolve(__dirname, 'src')
+      '~': path.resolve(__dirname, 'src')
     }
   },
   devServer: {

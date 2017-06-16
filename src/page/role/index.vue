@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="full">
-    <el-row :gutter="24" type="flex">
-      <el-col :span="12">
+    <el-row type="flex">
+      <el-col class="role-list">
         <div class="title">
           <span>角色</span>
         </div>
@@ -13,40 +13,42 @@
           </el-table>
         </div>
       </el-col>
-      <el-col :span="12" class="role-function">
+      <el-col class="role-function">
         <div class="title">
           <span>功能</span>
           <!--<el-button-group>
-              <el-button :disabled="functionBtn" type="primary" size="small" @click="functionCheckedSave">保存</el-button>
-              <el-button :disabled="functionBtn" type="primary" size="small" @click="functionRefresh">刷新</el-button>
-            </el-button-group>-->
+                    <el-button :disabled="functionBtn" type="primary" size="small" @click="functionCheckedSave">保存</el-button>
+                    <el-button :disabled="functionBtn" type="primary" size="small" @click="functionRefresh">刷新</el-button>
+                  </el-button-group>-->
         </div>
         <div class="content">
-          <el-tree v-loading="loading" :data="func.data" node-key="id" ref="functionTree" highlight-current show-checkbox current-node-key="id" :props="func.props" :render-content="renderFunctionContent" @current-change="functionCurrentChange"></el-tree>
+          <el-tree v-loading="loading" :data="func.data" node-key="id" ref="functionTree" highlight-current current-node-key="id" :props="func.props" :render-content="renderFunctionContent" :expand-on-click-node="false" @current-change="functionCurrentChange"></el-tree>
         </div>
       </el-col>
-      <el-col :span="12">
-        <div class="title">
-          <span>机构</span>
-          <el-button-group>
-            <el-button :disabled="checkPermissionBtn" type="primary" size="small" @click="permissionAdd">新增</el-button>
-            <el-button :disabled="checkPermissionBtn" type="primary" size="small" @click="permissionSave">保存</el-button>
-            <el-button :disabled="checkPermissionBtn" type="primary" size="small" @click="permissionRefresh">刷新</el-button>
-          </el-button-group>
-        </div>
-        <div class="content">
-          <el-table stripe border ref="permissionTable" :data="permissionData" style="width: 100%" highlight-current-row>
-            <el-table-column prop="proName" label="属性名"></el-table-column>
-            <el-table-column prop="value" label="属性值"></el-table-column>
-            <el-table-column label="操作" width="150">
-              <template scope="scope">
-                <el-button size="small" @click="permissionEdit(scope.$index, scope.row)">编辑</el-button>
-                <el-button size="small" type="danger" @click="permissionDelete(scope.$index, scope.row, permissionData)">删除</el-button>
-              </template>
-            </el-table-column>
-          </el-table>
-        </div>
-      </el-col>
+      <transition name="slide">
+        <el-col class="role-org" v-show="isActiveOrg">
+          <div class="title">
+            <span>机构</span>
+            <el-button-group>
+              <el-button :disabled="checkPermissionBtn" type="primary" size="small" @click="permissionAdd">新增</el-button>
+              <el-button :disabled="checkPermissionBtn" type="primary" size="small" @click="permissionSave">保存</el-button>
+              <el-button :disabled="checkPermissionBtn" type="primary" size="small" @click="permissionRefresh">刷新</el-button>
+            </el-button-group>
+          </div>
+          <div class="content">
+            <el-table stripe border ref="permissionTable" :data="permissionData" style="width: 100%" highlight-current-row>
+              <el-table-column prop="proName" label="属性名"></el-table-column>
+              <el-table-column prop="value" label="属性值"></el-table-column>
+              <el-table-column label="操作" width="150">
+                <template scope="scope">
+                  <el-button size="small" @click="permissionEdit(scope.$index, scope.row)">编辑</el-button>
+                  <el-button size="small" type="danger" @click="permissionDelete(scope.$index, scope.row, permissionData)">删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+        </el-col>
+      </transition>
     </el-row>
     <el-dialog title="机构" :visible.sync="dialogFormVisible" @close="initPermissionForm">
       <el-form ref="permissionForm" :rules="formRules" label-position="right" label-width="120px" :model="permission.current">
@@ -117,6 +119,9 @@ export default {
     },
     permissionData() {
       return _.concat(this.permission.data, this.permission.unsave);
+    },
+    isActiveOrg() {
+      return this.func.current
     }
   },
   methods: {
@@ -163,7 +168,7 @@ export default {
             this.loading = false;
           }, 500);
         })
-        .catch(()=> {
+        .catch(() => {
           this.loading = false;
         });
     },
@@ -330,6 +335,19 @@ body {
   font-family: Helvetica, sans-serif;
 }
 
+.slide-enter-active {
+  transition: all .3s ease-in;
+}
+
+.slide-leave-active {
+  transition: all .3s ease-out;
+}
+
+.slide-enter,
+.slide-leave-active {
+  transform: translateX(100%);
+}
+
 .full {
   position: absolute;
   top: 0;
@@ -337,6 +355,7 @@ body {
   right: 0;
   bottom: 0;
   padding: 0 12px;
+  overflow: hidden;
 }
 
 .el-table {
@@ -358,7 +377,11 @@ body {
   align-items: stretch;
   .el-col {
     overflow: auto;
+    position: relative;
     .title {
+      position: absolute;
+      left: 0;
+      right: 0;
       display: flex;
       padding: 10px 0;
       align-items: center;
@@ -370,8 +393,10 @@ body {
       }
     }
     .content {
+      padding-top: 48px;
       height: 100%;
       overflow: auto;
+      box-sizing: border-box;
     }
     >.el-row {
       margin-top: -30px;

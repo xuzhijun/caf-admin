@@ -6,7 +6,7 @@ export function fetch(url = '', data = {}, type = 'GET', config = {}) {
     let requestConfig = {
         'url': url,
         'method': type,
-        // 'baseURL': '/caf-template-admin/',
+        'baseURL': '/caf-template-admin/',
         'headers': {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
         }
@@ -91,7 +91,7 @@ export default {
         return fetch('/applicationRole/getAllrole', data)
     },
     role_function_list : function (data) {
-        return fetch('/roleFunction/roleFunctionMarkList', data)
+        return fetch('/roleFunction/findFunctionListByRoleId', data)
     },
     role_function_save : function (data) {
         return fetch('/roleFunction/saveRoleAndFunction', qs.stringify(data), 'POST')
