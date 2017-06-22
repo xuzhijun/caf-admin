@@ -26,9 +26,32 @@ module.exports = merge(baseWebpackConfig, {
     new webpack.NoEmitOnErrorsPlugin(),
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      filename: 'index.html',
-      template: 'index.html',
-      inject: true
+      title: '资源',
+      filename: 'html/resource/index.html',
+      template: 'src/index.html',
+      inject: true,
+      chunks: ['resource/index', 'api', 'vendor', 'manifest']
+    }),
+    new HtmlWebpackPlugin({
+      title: '菜单',
+      filename: 'html/menu/index.html',
+      template: 'src/index.html',
+      inject: true,
+      chunks: ['menu/index', 'api', 'vendor', 'manifest']
+    }),
+    new HtmlWebpackPlugin({
+      title: '机构',
+      filename: 'html/org/index.html',
+      template: 'src/index.html',
+      inject: true,
+      chunks: ['org/index', 'api', 'vendor', 'manifest']
+    }),
+    new HtmlWebpackPlugin({
+      title: '授权',
+      filename: 'html/role/index.html',
+      template: 'src/index.html',
+      inject: true,
+      chunks: ['role/index', 'api', 'vendor', 'manifest']
     }),
     new FriendlyErrorsPlugin()
   ]

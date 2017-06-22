@@ -25,9 +25,17 @@ module.exports = {
     env: require('./dev.env'),
     port: 8080,
     autoOpenBrowser: true,
-    assetsSubDirectory: 'static',
+    assetsSubDirectory: '',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/caf-template-admin': {
+        target: 'http://localhost:9090',
+        pathRewrite: {
+          "^/caf-template-admin": "/caf-template-admin"
+        },
+        changeOrigin: true
+      }
+    },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
     // (https://github.com/webpack/css-loader#sourcemaps)

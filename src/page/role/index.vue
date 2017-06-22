@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="full">
-    <el-row type="flex">
-      <el-col class="role-list">
+    <el-row :gutter="24" type="flex">
+      <el-col :span="10" class="role-list">
         <div class="title">
           <span>角色</span>
         </div>
@@ -13,20 +13,36 @@
           </el-table>
         </div>
       </el-col>
-      <el-col class="role-function">
+      <el-col :span="14" class="role-org">
         <div class="title">
-          <span>功能</span>
-          <!--<el-button-group>
-                    <el-button :disabled="functionBtn" type="primary" size="small" @click="functionCheckedSave">保存</el-button>
-                    <el-button :disabled="functionBtn" type="primary" size="small" @click="functionRefresh">刷新</el-button>
-                  </el-button-group>-->
+          <span>角色名称：{{role.current.name}}</span>
+          <el-button :disabled="isRoleActived" type="primary" @click="openDialogFunction">授权</el-button>
         </div>
         <div class="content">
-          <el-tree v-loading="loading" :data="func.data" node-key="id" ref="functionTree" highlight-current current-node-key="id" :props="func.props" :render-content="renderFunctionContent" :expand-on-click-node="false" @current-change="functionCurrentChange"></el-tree>
+          <el-table stripe border :data="func.table" ref="functionTable" style="width: 100%" highlight-current-row>
+            <el-table-column type="index" label="序号" width="80"></el-table-column>
+            <el-table-column prop="name" label="名称"></el-table-column>
+            <el-table-column sortable prop="type" label="类型"></el-table-column>
+            <el-table-column sortable prop="parentName" label="父节点"></el-table-column>
+          </el-table>
         </div>
       </el-col>
-      <transition name="slide">
-        <el-col class="role-org" v-show="isActiveOrg">
+    </el-row>
+    <el-dialog title="授权" size="large" :visible.sync="dialogFunctionVisible">
+      <el-row>
+        <el-col :span="8" class="role-function">
+          <div class="title">
+            <span>功能</span>
+            <!--<el-button-group>
+                            <el-button :disabled="functionBtn" type="primary" size="small" @click="functionCheckedSave">保存</el-button>
+                            <el-button :disabled="functionBtn" type="primary" size="small" @click="functionRefresh">刷新</el-button>
+                          </el-button-group>-->
+          </div>
+          <div class="content">
+            <el-tree v-loading="loading" :data="func.data" node-key="id" ref="functionTree" highlight-current current-node-key="id" :props="func.props" :render-content="renderFunctionContent" :expand-on-click-node="false" @current-change="functionCurrentChange"></el-tree>
+          </div>
+        </el-col>
+        <el-col :span="16" class="role-org">
           <div class="title">
             <span>机构</span>
             <el-button-group>
@@ -39,7 +55,7 @@
             <el-table stripe border ref="permissionTable" :data="permissionData" style="width: 100%" highlight-current-row>
               <el-table-column prop="proName" label="属性名"></el-table-column>
               <el-table-column prop="value" label="属性值"></el-table-column>
-              <el-table-column label="操作" width="150">
+              <el-table-column label="操作">
                 <template scope="scope">
                   <el-button size="small" @click="permissionEdit(scope.$index, scope.row)">编辑</el-button>
                   <el-button size="small" type="danger" @click="permissionDelete(scope.$index, scope.row, permissionData)">删除</el-button>
@@ -48,9 +64,10 @@
             </el-table>
           </div>
         </el-col>
-      </transition>
-    </el-row>
-    <el-dialog title="机构" :visible.sync="dialogFormVisible" @close="initPermissionForm">
+  
+      </el-row>
+    </el-dialog>
+    <el-dialog title="机构" :visible.sync="dialogPermissionVisible" @close="initPermissionForm">
       <el-form ref="permissionForm" :rules="formRules" label-position="right" label-width="120px" :model="permission.current">
         <el-form-item label="属性名" prop="proName">
           <el-input v-model="permission.current.proName"></el-input>
@@ -72,13 +89,15 @@ import _ from 'lodash'
 export default {
   data() {
     return {
-      dialogFormVisible: false,
+      dialogFunctionVisible: false,
+      dialogPermissionVisible: false,
       loading: false,
       role: {
         data: [],
         current: {}
       },
       func: {
+        table: [],
         data: [],
         current: null,
         checked: [],
@@ -122,15 +141,24 @@ export default {
     },
     isActiveOrg() {
       return this.func.current
+    },
+    isRoleActived() {
+      return !this.role.current
     }
   },
   methods: {
     /* 对话框相关操作 */
+    openDialogFunction() {
+      this.dialogFunctionVisible = true;
+    },
+    closeDialogFunction() {
+      this.dialogFunctionVisible = false;
+    },
     openDialog() {
-      this.dialogFormVisible = true;
+      this.dialogPermissionVisible = true;
     },
     closeDialog() {
-      this.dialogFormVisible = false;
+      this.dialogPermissionVisible = false;
     },
     /* 角色 */
     initRole() { // 初始化 角色表
@@ -148,7 +176,7 @@ export default {
     roleCurrentChange(currentRow, oldCurrentRow) {
       if (currentRow && currentRow.id) {
         this.role.current = currentRow;
-        this.initFunction(this.role.current.id);
+        this.initFunctionTable(this.role.current.id);
       }
 
     },
@@ -164,6 +192,22 @@ export default {
           this.$refs.functionTree.setCheckedKeys(this.func.checked);
           this.func.current = null;
           this.initPermission();// 清空相关数据
+          setTimeout(() => {
+            this.loading = false;
+          }, 500);
+        })
+        .catch(() => {
+          this.loading = false;
+        });
+    },
+    initFunctionTable(roleId) { // 初始化 function 表
+      this.loading = true;
+      Api.role_function_list_table({
+        'roleId': roleId
+      })
+        .then(res => {// 填充 function 数据
+          this.func.table = res.data;
+          this.func.current = null;
           setTimeout(() => {
             this.loading = false;
           }, 500);
@@ -332,7 +376,7 @@ export default {
 
 <style lang="scss">
 body {
-  font-family: Helvetica, sans-serif;
+  font-family: 'microsoft yahei', Helvetica, sans-serif;
 }
 
 .slide-enter-active {
@@ -376,12 +420,13 @@ body {
   margin-bottom: 20px;
   align-items: stretch;
   .el-col {
-    overflow: auto;
+    overflow: hidden;
     position: relative;
     .title {
-      position: absolute;
-      left: 0;
-      right: 0;
+      // position: absolute;
+      // left: 0;
+      // right: 0;
+      height: 30px;
       display: flex;
       padding: 10px 0;
       align-items: center;
@@ -393,7 +438,7 @@ body {
       }
     }
     .content {
-      padding-top: 48px;
+      // padding-top: 48px;
       height: 100%;
       overflow: auto;
       box-sizing: border-box;

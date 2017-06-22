@@ -150,45 +150,15 @@ module.exports = (options = {}) => ({
       colors: true
     },
     proxy: {
-      '/applicationFunction': {
+      '/caf-template-admin': {
         target: 'http://localhost:9090',
         pathRewrite: {
-          "^/applicationFunction": ""
-        },
-        changeOrigin: true
-      },
-      '/shareCompon': {
-        target: 'http://localhost:9090',
-        pathRewrite: {
-          "^/shareCompon": ""
-        },
-        changeOrigin: true
-      },
-      '/applicationOrg': {
-        target: 'http://localhost:9090',
-        pathRewrite: {
-          "^/applicationOrg": ""
-        },
-        changeOrigin: true
-      },
-      '/applicationRole': {
-        target: 'http://localhost:9090',
-        pathRewrite: {
-          "^/applicationRole": ""
-        },
-        changeOrigin: true
-      },
-      '/roleFunction/': {
-        target: 'http://localhost:9090',
-        pathRewrite: {
-          "^/roleFunction/": "/"
-        },
-        changeOrigin: true
-      },
-      '/roleFunctionPermission/': {
-        target: 'http://localhost:9090',
-        pathRewrite: {
-          "^/roleFunctionPermission/": "/"
+          "^/caf-template-admin": "/caf-template-admin"
+        //   "^/applicationRole": "/applicationRole",
+        //   "^/applicationFunction": "/applicationFunction",
+        //   "^/applicationOrg": "/applicationOrg",
+        //   "^/roleFunction/": "/roleFunction/",
+        //   "^/roleFunctionPermission/": "/roleFunctionPermission/"
         },
         changeOrigin: true
       }

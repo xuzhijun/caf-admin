@@ -4,12 +4,10 @@
   "author": "pennyxzj@qq.com",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --hot --env.dev",
-    "build": "rimraf dist && webpack -p --progress --hide-modules",
     "mock": "json-server src/mock/db.json",
+    "dev": "node build/dev-server.js",
     "mockdev": "npm run mock & npm run dev",
-    "dev-n": "node build/dev-server.js",
-    "build-n": "rimraf dist && node --trace-deprecation build/build.js"
+    "build": "rimraf dist && node --trace-deprecation build/build.js"
   },
   "dependencies": {
     "element-ui": "^1.1.2",
