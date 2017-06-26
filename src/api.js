@@ -91,7 +91,7 @@ export default {
         return fetch('/applicationRole/getAllrole', data)
     },
     role_function_list : function (data) {
-        return fetch('/roleFunction/findFunctionListByRoleId', data)
+        return fetch('/roleFunction/roleFunctionMarkList', data)
     },
     role_function_list_table : function (data) {
         return fetch('/roleFunction/findFunctionListByRoleIdTable', data)

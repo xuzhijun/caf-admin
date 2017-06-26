@@ -16,7 +16,7 @@
       <el-col :span="14" class="role-org">
         <div class="title">
           <span>角色名称：{{role.current.name}}</span>
-          <el-button :disabled="isRoleActived" type="primary" @click="openDialogFunction">授权</el-button>
+          <el-button :disabled="isRoleActived" type="primary" @click="initFunction">授权</el-button>
         </div>
         <div class="content">
           <el-table stripe border :data="func.table" ref="functionTable" style="width: 100%" highlight-current-row>
@@ -28,28 +28,20 @@
         </div>
       </el-col>
     </el-row>
-    <el-dialog title="授权" size="large" :visible.sync="dialogFunctionVisible">
+    <el-dialog class="dialog-function" title="授权" size="large" :visible.sync="dialogFunctionVisible">
       <el-row>
         <el-col :span="8" class="role-function">
           <div class="title">
             <span>功能</span>
-            <!--<el-button-group>
-                            <el-button :disabled="functionBtn" type="primary" size="small" @click="functionCheckedSave">保存</el-button>
-                            <el-button :disabled="functionBtn" type="primary" size="small" @click="functionRefresh">刷新</el-button>
-                          </el-button-group>-->
           </div>
           <div class="content">
-            <el-tree v-loading="loading" :data="func.data" node-key="id" ref="functionTree" highlight-current current-node-key="id" :props="func.props" :render-content="renderFunctionContent" :expand-on-click-node="false" @current-change="functionCurrentChange"></el-tree>
+            <el-tree v-loading="loading" :data="func.data" node-key="id" ref="functionTree" highlight-current show-checkbox accordion current-node-key="id" :props="func.props" :render-content="renderFunctionContent" :expand-on-click-node="true" @current-change="functionCurrentChange"></el-tree>
           </div>
         </el-col>
         <el-col :span="16" class="role-org">
           <div class="title">
             <span>机构</span>
-            <el-button-group>
-              <el-button :disabled="checkPermissionBtn" type="primary" size="small" @click="permissionAdd">新增</el-button>
-              <el-button :disabled="checkPermissionBtn" type="primary" size="small" @click="permissionSave">保存</el-button>
-              <el-button :disabled="checkPermissionBtn" type="primary" size="small" @click="permissionRefresh">刷新</el-button>
-            </el-button-group>
+            <el-button :disabled="checkPermissionBtn" type="primary" size="small" @click="permissionAdd">新增</el-button>
           </div>
           <div class="content">
             <el-table stripe border ref="permissionTable" :data="permissionData" style="width: 100%" highlight-current-row>
@@ -67,7 +59,7 @@
   
       </el-row>
     </el-dialog>
-    <el-dialog title="机构" :visible.sync="dialogPermissionVisible" @close="initPermissionForm">
+    <el-dialog class="dialog-permission" title="机构" :visible.sync="dialogPermissionVisible" @close="initPermissionForm">
       <el-form ref="permissionForm" :rules="formRules" label-position="right" label-width="120px" :model="permission.current">
         <el-form-item label="属性名" prop="proName">
           <el-input v-model="permission.current.proName"></el-input>
@@ -99,6 +91,7 @@ export default {
       func: {
         table: [],
         data: [],
+        dataFlatten: [],
         current: null,
         checked: [],
         props: {
@@ -182,22 +175,21 @@ export default {
     },
     /* 功能 */
     initFunction(roleId) { // 初始化 function 树
-      this.loading = true;
       Api.role_function_list({
         'roleId': roleId
       })
         .then(res => {// 填充 function 数据
-          this.func.data = res.data;
-          this.initFunctionChecked(this.func.data);// 获取 function 中勾选的节点（叶子结点）
-          this.$refs.functionTree.setCheckedKeys(this.func.checked);
+          // this.initPermission();
           this.func.current = null;
-          this.initPermission();// 清空相关数据
-          setTimeout(() => {
-            this.loading = false;
-          }, 500);
+          this.func.dataFlatten = [];
+          this.func.data = res.data;
+          this.openDialogFunction();
         })
-        .catch(() => {
-          this.loading = false;
+        .then(() => {
+          this.recursionFunction(this.func.data);// 获取 function 中勾选的节点（叶子结点）
+        })
+        .then(() => {
+          this.$refs.functionTree.setCheckedKeys(this.func.checked);
         });
     },
     initFunctionTable(roleId) { // 初始化 function 表
@@ -219,15 +211,27 @@ export default {
     renderFunctionContent(h, { node, data, store }) { // 渲染 功能树的节点内容
       return (<span>{node.label}</span>);
     },
-    initFunctionChecked(list) { // 初始化 功能树的勾选状态
-      if (list == null || list.length == 0) {
+    recursionFunction(list) { // 初始化 功能树的勾选状态
+      if ( !list || list.length == 0) {
         return;
       }
       for (let i = 0; i < list.length; i++) {
-        if (list[i].flag) {
-          this.func.checked.push(list[i].id);
-        }
-        this.initFunctionChecked(list[i].functions);
+        list[i].flag && this.func.checked.push(list[i].id);
+        this.func.dataFlatten.push({
+          "id": list[i].id,
+          "roleFunctionId": list[i].roleFunctionId,
+          // "leaf": list[i].leaf,
+          // "nodes": list[i].nodes,
+          "name": list[i].name,
+          "flag": list[i].flag,
+          "type": list[i].type,
+          // "parentId": list[i].parentId,
+          // "url": list[i].url,
+          // "code": list[i].code,
+          // "status": list[i].status,
+          "permissionList": list[i].permissionList,
+        });
+        this.recursionFunction(list[i].functions);
       }
     },
     functionCurrentChange(currentData, currentNode) {
@@ -270,9 +274,13 @@ export default {
     functionRefresh: _.debounce(function () { // 刷新 功能树
       this.role.current && this.initFunction(this.role.current.id);
     }, 200),
+    eventFunciton: function () {
+
+    },
     /* 机构 */
     // 初始化 permission 表
     initPermission(roleId = '', functionId = '') {
+
       this.permission.data = [];
       this.permission.unsave = [];
       this.permission.delete = [];
@@ -281,15 +289,18 @@ export default {
         proName: '',
         value: ''
       };
-      if (roleId && functionId) { // 不为空则异步请求数据
-        Api.role_permission_list({
-          'roleId': roleId,
-          'functionId': functionId
-        })
-          .then(res => {
-            this.permission.data = res.data;
-          });
-      }
+      this.permission.data = _.find(this.func.dataFlatten, function (o) {
+        return o.id == functionId;
+      }).permissionList;
+      // if (roleId && functionId) { // 不为空则异步请求数据
+      //   Api.role_permission_list({
+      //     'roleId': roleId,
+      //     'functionId': functionId
+      //   })
+      //     .then(res => {
+      //       this.permission.data = res.data;
+      //     });
+      // }
     },
     initPermissionForm(index = '', { // 初始化表单
       proName = '',
@@ -305,15 +316,13 @@ export default {
       this.$refs['permissionForm'].validate((valid) => {
         if (valid) {
           if (this.permission.current.index === '') {
-            this.permission.unsave.push({
+            this.permission.data.push({
               'proName': this.permission.current.proName,
-              'value': this.permission.current.value,
-              'roleId': this.role.current.id,
-              'functionId': this.func.current.id
+              'value': this.permission.current.value
             })
           } else {
-            this.$refs.permissionTable.data[this.permission.current.index].proName = this.permission.current.proName;
-            this.$refs.permissionTable.data[this.permission.current.index].value = this.permission.current.value;
+            this.permission.data[this.permission.current.index].proName = this.permission.current.proName;
+            this.permission.data[this.permission.current.index].value = this.permission.current.value;
           }
           this.closeDialog();
         }
@@ -456,6 +465,11 @@ body {
     .el-col {
       height: 50%;
     }
+  }
+}
+.dialog-function {
+  .el-dialog__body {
+    padding-top: 0;
   }
 }
 </style>
