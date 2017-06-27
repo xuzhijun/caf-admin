@@ -9,11 +9,11 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 var extractCSS = new ExtractTextPlugin({
-  filename: utils.assetsPath('css/style.css'),
+  filename: utils.assetsPath('css/caf-vue/style.css'),
   allChunks: true
 });
 var extractSASS = new ExtractTextPlugin({
-  filename: utils.assetsPath('css/icon.css'),
+  filename: utils.assetsPath('css/caf-vue/icon.css'),
   allChunks: true
 });
 var env = config.build.env
@@ -39,8 +39,8 @@ var webpackConfig = merge(baseWebpackConfig, {
   devtool: config.build.productionSourceMap ? '#source-map' : false,
   output: {
     path: config.build.assetsRoot,
-    filename: utils.assetsPath('js/[name].[chunkhash].js'),
-    chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
+    filename: utils.assetsPath('js/caf-vue/[name].[chunkhash].js'),
+    chunkFilename: utils.assetsPath('js/caf-vue/[id].[chunkhash].js')
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -93,7 +93,7 @@ var webpackConfig = merge(baseWebpackConfig, {
     }),
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['api', 'vendor'],
+      names: ['api', 'vendor','manifest'],
       minChunks: function (module, count) {
         // any required modules inside node_modules are extracted to vendor
         return (
@@ -107,10 +107,10 @@ var webpackConfig = merge(baseWebpackConfig, {
     }),
     // extract webpack runtime and module manifest to its own file in order to
     // prevent vendor hash from being updated whenever app bundle is updated
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'manifest',
-      chunks: ['api','vendor']
-    }),
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: 'caf-vue/manifest',
+    //   chunks: ['caf-vue/api','caf-vue/vendor']
+    // }),
     // new webpack.optimize.ModuleConcatenationPlugin()
     // copy custom static assets
     // new CopyWebpackPlugin([

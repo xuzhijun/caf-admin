@@ -16,10 +16,10 @@
       <el-col :span="14" class="role-org">
         <div class="title">
           <span>角色名称：{{role.current.name}}</span>
-          <el-button :disabled="isRoleActived" type="primary" @click="initFunction">授权</el-button>
+          <el-button :disabled="isRoleActived" type="primary" @click="editFunction">授权</el-button>
         </div>
         <div class="content">
-          <el-table stripe border :data="func.table" ref="functionTable" style="width: 100%" highlight-current-row>
+          <el-table v-loading="loading" stripe border :data="func.table" ref="functionTable" style="width: 100%" highlight-current-row>
             <el-table-column type="index" label="序号" width="80"></el-table-column>
             <el-table-column prop="name" label="名称"></el-table-column>
             <el-table-column sortable prop="type" label="类型"></el-table-column>
@@ -35,22 +35,22 @@
             <span>功能</span>
           </div>
           <div class="content">
-            <el-tree v-loading="loading" :data="func.data" node-key="id" ref="functionTree" highlight-current show-checkbox accordion current-node-key="id" :props="func.props" :render-content="renderFunctionContent" :expand-on-click-node="true" @current-change="functionCurrentChange"></el-tree>
+            <el-tree :data="func.data" node-key="id" ref="functionTree" highlight-current show-checkbox accordion current-node-key="id" :props="func.props" :render-content="renderFunctionContent" :expand-on-click-node="true" @current-change="functionCurrentChange"></el-tree>
           </div>
         </el-col>
         <el-col :span="16" class="role-org">
           <div class="title">
             <span>机构</span>
-            <el-button :disabled="checkPermissionBtn" type="primary" size="small" @click="permissionAdd">新增</el-button>
+            <el-button :disabled="checkPermissionAdd" type="primary" size="small" @click="addPermission">新增</el-button>
           </div>
           <div class="content">
-            <el-table stripe border ref="permissionTable" :data="permissionData" style="width: 100%" highlight-current-row>
+            <el-table stripe border ref="permissionTable" :data="permission.data" style="width: 100%" highlight-current-row>
               <el-table-column prop="proName" label="属性名"></el-table-column>
               <el-table-column prop="value" label="属性值"></el-table-column>
               <el-table-column label="操作">
                 <template scope="scope">
-                  <el-button size="small" @click="permissionEdit(scope.$index, scope.row)">编辑</el-button>
-                  <el-button size="small" type="danger" @click="permissionDelete(scope.$index, scope.row, permissionData)">删除</el-button>
+                  <el-button size="small" @click="editPermission(scope.$index, scope.row)">编辑</el-button>
+                  <el-button size="small" type="danger" @click="deletePermission(scope.$index, scope.row, permission.data)">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -58,8 +58,12 @@
         </el-col>
   
       </el-row>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="closeDialog">取 消</el-button>
+        <el-button type="primary" @click="saveFunction">确 定</el-button>
+      </div>
     </el-dialog>
-    <el-dialog class="dialog-permission" title="机构" :visible.sync="dialogPermissionVisible" @close="initPermissionForm">
+    <el-dialog class="dialog-permission" title="机构" :visible.sync="dialogPermissionVisible">
       <el-form ref="permissionForm" :rules="formRules" label-position="right" label-width="120px" :model="permission.current">
         <el-form-item label="属性名" prop="proName">
           <el-input v-model="permission.current.proName"></el-input>
@@ -70,7 +74,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="closeDialog">取 消</el-button>
-        <el-button type="primary" @click="submitPermissionForm">确 定</el-button>
+        <el-button type="primary" @click="savePermission">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -85,29 +89,25 @@ export default {
       dialogPermissionVisible: false,
       loading: false,
       role: {
-        data: [],
-        current: {}
+        current: {},
+        data: []
       },
       func: {
-        table: [],
-        data: [],
-        dataFlatten: [],
-        current: null,
-        checked: [],
+        current: {},      // 当前选中的 function 节点
+        data: [],         // 原始树
+        dataFlatten: [],  // 扁平化树
+        dataChecked: [],  // 选中节点ID列表
+        table: [],        // 扁平化选中树
         props: {
           children: 'functions',
           label: 'name'
         }
       },
       permission: {
-        data: [],
+        current: {},  // 存放当前选中的 permission 项
+        data: [],     // 存放当前 function 下的 permission 列表
         unsave: [],
-        delete: [],
-        current: {
-          'index': '',
-          'proName': '',
-          'value': ''
-        }
+        delete: []
       },
       formRules: {
         'proName': [
@@ -123,15 +123,15 @@ export default {
     functionBtn() {
       return !this.role.current;
     },
-    checkPermissionBtn() {
-      return !this.func.current;
+    checkPermissionAdd() {
+      return !(this.func.current.flag && this.func.current.type != 'NODE');
     },
-    checkPermissionSave() {
-      return !(this.permission.unsave.length || this.permission.delete.length);
-    },
-    permissionData() {
-      return _.concat(this.permission.data, this.permission.unsave);
-    },
+    // checkPermissionSave() {
+    //   return !(this.permission.unsave.length || this.permission.delete.length);
+    // },
+    // permissionData() {
+    //   // return _.concat(this.permission.data, this.permission.unsave);
+    // },
     isActiveOrg() {
       return this.func.current
     },
@@ -171,26 +171,14 @@ export default {
         this.role.current = currentRow;
         this.initFunctionTable(this.role.current.id);
       }
-
     },
     /* 功能 */
-    initFunction(roleId) { // 初始化 function 树
-      Api.role_function_list({
-        'roleId': roleId
-      })
-        .then(res => {// 填充 function 数据
-          // this.initPermission();
-          this.func.current = null;
-          this.func.dataFlatten = [];
-          this.func.data = res.data;
-          this.openDialogFunction();
-        })
-        .then(() => {
-          this.recursionFunction(this.func.data);// 获取 function 中勾选的节点（叶子结点）
-        })
-        .then(() => {
-          this.$refs.functionTree.setCheckedKeys(this.func.checked);
-        });
+    resetFunction() {
+      this.func.current = {};       // 当前选中的 function 节点
+      this.func.data = [];          // 原始树
+      this.func.dataFlatten = [];   // 扁平化树
+      this.func.dataChecked = [];   // 选中节点ID列表
+      // this.func.table = [];
     },
     initFunctionTable(roleId) { // 初始化 function 表
       this.loading = true;
@@ -199,7 +187,6 @@ export default {
       })
         .then(res => {// 填充 function 数据
           this.func.table = res.data;
-          this.func.current = null;
           setTimeout(() => {
             this.loading = false;
           }, 500);
@@ -208,17 +195,69 @@ export default {
           this.loading = false;
         });
     },
+    initFunction(roleId) { // 初始化 function 树
+      Api.role_function_list({
+        'roleId': roleId
+      })
+        .then(res => {// 请求成功
+          // 清除旧数据
+          this.resetFunction();
+          // 写入新数据
+          this.func.data = res.data;
+          // 打开对话框
+          this.openDialogFunction();
+        })
+        .then(() => {
+          this.recursionFunction(this.func.data); // 递归树
+        })
+        .then(() => {
+          this.$refs.functionTree.setCheckedKeys(this.func.dataChecked); // 勾选打钩节点
+        })
+        .then(() => {
+          this.initPermission(); // 初始化 permission
+        });
+    },
+    editFunction() {
+      this.role.current.id && this.initFunction(this.role.current.id);
+    },
+    saveFunction() {
+      Api.role_function_permission_save(this.func.dataFlatten)
+        .then(res => {
+          // console.log(res);
+          if (res.code == '1') {
+            this.$message({
+              type: 'success',
+              message: res.message
+            });
+            this.closeDialog();
+          } else {
+            throw new Error(res.message);
+          }
+        })
+        .catch(err => {
+          // error code
+          this.$message({
+            type: 'info',
+            message: err.message
+          });
+        });
+    },
     renderFunctionContent(h, { node, data, store }) { // 渲染 功能树的节点内容
       return (<span>{node.label}</span>);
     },
-    recursionFunction(list) { // 初始化 功能树的勾选状态
-      if ( !list || list.length == 0) {
+    /* 递归功能树，两个功能
+    一，遍历勾选的节点
+    二，扁平化所有树节点
+    */
+    recursionFunction(list) {
+      if (!list || list.length == 0) {
         return;
       }
       for (let i = 0; i < list.length; i++) {
-        list[i].flag && this.func.checked.push(list[i].id);
+        list[i].flag && this.func.dataChecked.push(list[i].id);
         this.func.dataFlatten.push({
           "id": list[i].id,
+          "roleId": this.role.current.id,
           "roleFunctionId": list[i].roleFunctionId,
           // "leaf": list[i].leaf,
           // "nodes": list[i].nodes,
@@ -240,58 +279,61 @@ export default {
         this.initPermission(this.role.current.id, this.func.current.id);
       }
     },
-    functionCheckedSave() { // 保存 功能树的勾选状态
-      let _checked = this.$refs.functionTree.getCheckedKeys(true);
-      if (this.role.current) {
-        Api.role_function_save({
-          'roleId': this.role.current.id,
-          'functionId': _checked.join(',')
-        })
-          .then(res => {
-            // console.log(res);
-            if (res.code == '1') {
-              this.$message({
-                type: 'success',
-                message: res.message
-              });
-              // this.func.checked = res.data;
-              this.func.checked = _checked;
-              this.closeDialog();
-            } else {
-              throw new Error(res.message);
-            }
-          })
-          .catch(err => {
-            // error code
-            // console.log(err);
-            this.$message({
-              type: 'info',
-              message: err.message
-            });
-          });
-      }
-    },
-    functionRefresh: _.debounce(function () { // 刷新 功能树
-      this.role.current && this.initFunction(this.role.current.id);
-    }, 200),
-    eventFunciton: function () {
+    // functionCheckedSave() { // 保存 功能树的勾选状态
+    //   let _checked = this.$refs.functionTree.getCheckedKeys(true);
+    //   if (this.role.current) {
+    //     Api.role_function_save({
+    //       'roleId': this.role.current.id,
+    //       'functionId': _checked.join(',')
+    //     })
+    //       .then(res => {
+    //         // console.log(res);
+    //         if (res.code == '1') {
+    //           this.$message({
+    //             type: 'success',
+    //             message: res.message
+    //           });
+    //           // this.func.checked = res.data;
+    //           this.func.checked = _checked;
+    //           this.closeDialog();
+    //         } else {
+    //           throw new Error(res.message);
+    //         }
+    //       })
+    //       .catch(err => {
+    //         // error code
+    //         // console.log(err);
+    //         this.$message({
+    //           type: 'info',
+    //           message: err.message
+    //         });
+    //       });
+    //   }
+    // },
+    // functionRefresh: _.debounce(function () { // 刷新 功能树
+    //   this.role.current && this.initFunction(this.role.current.id);
+    // }, 200),
+    // eventFunciton: function () {
 
-    },
+    // },
     /* 机构 */
     // 初始化 permission 表
-    initPermission(roleId = '', functionId = '') {
-
+    resetPermission() {
+      this.permission.current = {};
       this.permission.data = [];
-      this.permission.unsave = [];
-      this.permission.delete = [];
-      this.permission.current = {
-        index: '',
-        proName: '',
-        value: ''
-      };
-      this.permission.data = _.find(this.func.dataFlatten, function (o) {
-        return o.id == functionId;
-      }).permissionList;
+    },
+    initPermission(roleId = '', functionId = '') {
+      this.permission.data = [];
+      this.permission.current = {};
+      // this.permission.unsave = [];
+      // this.permission.delete = [];
+      // console.log(this.func.dataFlatten);
+      if (functionId) {
+        this.permission.data = _.find(this.func.dataFlatten, function (o) {
+          return o.id == functionId;
+        }).permissionList;
+      }
+      console.log(this.permission.data);
       // if (roleId && functionId) { // 不为空则异步请求数据
       //   Api.role_permission_list({
       //     'roleId': roleId,
@@ -302,7 +344,7 @@ export default {
       //     });
       // }
     },
-    initPermissionForm(index = '', { // 初始化表单
+    initPermissionForm(index = '', { // 初始化 permission 表单
       proName = '',
       value = ''
     } = {}) {
@@ -311,8 +353,20 @@ export default {
       this.permission.current.proName = proName;
       this.permission.current.value = value;
     },
-    submitPermissionForm() {
-      // console.log(this.permission.current.index);
+    /* 
+    在做新增和编辑的时候曾经想过把这两个方法合并，利用函数参数的默认值来区分两者，
+    但是这样做会牺牲对于命名的语义化，所以最终还是使用了两个方法。
+    我觉得，代码不仅仅是写给机器看的，也是写给人看的。
+    */
+    addPermission() { // 新增 permission
+      this.initPermissionForm();
+      this.openDialog();
+    },
+    editPermission(index, row) { // 修改 permission
+      this.initPermissionForm(index, row);
+      this.openDialog();
+    },
+    savePermission() { // 保存 permission
       this.$refs['permissionForm'].validate((valid) => {
         if (valid) {
           if (this.permission.current.index === '') {
@@ -327,55 +381,48 @@ export default {
           this.closeDialog();
         }
       });
+    },
+    deletePpermission(index, row, rows) { // 删除 permission
+      this.permission.data.splice(index, 1);
+      // if (row.id) {
+      //   this.permission.delete.push(row.id);
 
+      // } else {
+      //   this.permission.unsave.splice(index - this.permission.data.length, 1)
+      // }
     },
-    permissionAdd() {
-      this.openDialog();
-    },
-    permissionEdit(index, row) { // 弹出编辑框
-      this.initPermissionForm(index, row);
-      this.openDialog();
-    },
-    permissionDelete(index, row, rows) { // 删除行
-      if (row.id) {
-        this.permission.delete.push(row.id);
-        this.permission.data.splice(index, 1);
-      } else {
-        this.permission.unsave.splice(index - this.permission.data.length, 1)
-      }
-    },
-    permissionRefresh: _.debounce(function () {
-      this.role.current
-        && this.func.current
-        && this.initPermission(this.role.current.id, this.func.current.id);
-    }, 200),
-    permissionSave: _.debounce(function () {
-      if (this.permission.unsave.length || this.permission.delete.length) {
-        Api.role_permission_save({
-          "addRoleFuncPermissions": this.permission.unsave,
-          "deleteIds": this.permission.delete
-        })
-          .then(res => {
-            // console.log(res);
-            if (res.code == '1') {
-              this.$message({
-                type: 'success',
-                message: res.message
-              });
-              this.closeDialog();
-            } else {
-              throw new Error(res.message);
-            }
-          })
-          .catch(err => {
-            // error code
-            this.$message({
-              type: 'info',
-              message: err.message
-            });
-          });
-      }
-    }, 200)
+    // permissionRefresh: _.debounce(function () {
+    //   this.role.current
+    //     && this.func.current
+    //     && this.initPermission(this.role.current.id, this.func.current.id);
+    // }, 200),
+    // permissionSave: _.debounce(function () {
+    //   if (this.permission.unsave.length || this.permission.delete.length) {
+    //     Api.role_permission_save({
+    //       "addRoleFuncPermissions": this.permission.unsave,
+    //       "deleteIds": this.permission.delete
+    //     })
+    //       .then(res => {
+    //         // console.log(res);
+    //         if (res.code == '1') {
+    //           this.$message({
+    //             type: 'success',
+    //             message: res.message
+    //           });
+    //           this.closeDialog();
+    //         } else {
+    //           throw new Error(res.message);
+    //         }
+    //       })
+    //       .catch(err => {
+    //         // error code
+    //         this.$message({
+    //           type: 'info',
+    //           message: err.message
+    //         });
+    //       });
+    //   }
+    // }, 200)
   },
   mounted() {
     this.initRole();
@@ -467,6 +514,7 @@ body {
     }
   }
 }
+
 .dialog-function {
   .el-dialog__body {
     padding-top: 0;

@@ -108,5 +108,12 @@ export default {
                 'Content-Type': 'application/json;charset=UTF-8'
             }
         })
+    },
+    role_function_permission_save : function (data) {
+        return fetch('/roleFunctionPermission/saveRoleFunctionPermission', data, 'POST', {
+            'headers': {
+                'Content-Type': 'application/json;charset=UTF-8'
+            }
+        })
     }
 }
