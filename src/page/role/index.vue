@@ -32,16 +32,16 @@
       <el-row>
         <el-col :span="8" class="role-function">
           <div class="title">
-            <span>功能</span>
+            <span>功能{{currentNodeType}}</span>
           </div>
           <div class="content">
-            <el-tree :data="func.data" node-key="id" ref="functionTree" highlight-current show-checkbox accordion current-node-key="id" :props="func.props" :render-content="renderFunctionContent" :expand-on-click-node="true" @current-change="functionCurrentChange"></el-tree>
+            <el-tree :data="func.data" node-key="id" ref="functionTree" highlight-current show-checkbox accordion current-node-key="id" :props="func.props" :render-content="renderFunctionContent" :expand-on-click-node="true" @current-change="functionCurrentChange" @check-change="functionCheckChange"></el-tree>
           </div>
         </el-col>
         <el-col :span="16" class="role-org">
           <div class="title">
-            <span>机构</span>
-            <el-button :disabled="checkPermissionAdd" type="primary" size="small" @click="addPermission">新增</el-button>
+            <span>属性（NODE类型节点不能添加属性）</span>
+            <el-button :disabled="checkAddPermission" type="primary" size="small" @click="addPermission">新增</el-button>
           </div>
           <div class="content">
             <el-table stripe border ref="permissionTable" :data="permission.data" style="width: 100%" highlight-current-row>
@@ -63,7 +63,7 @@
         <el-button type="primary" @click="saveFunction">确 定</el-button>
       </div>
     </el-dialog>
-    <el-dialog class="dialog-permission" title="机构" :visible.sync="dialogPermissionVisible">
+    <el-dialog class="dialog-permission" title="属性" :visible.sync="dialogPermissionVisible">
       <el-form ref="permissionForm" :rules="formRules" label-position="right" label-width="120px" :model="permission.current">
         <el-form-item label="属性名" prop="proName">
           <el-input v-model="permission.current.proName"></el-input>
@@ -93,6 +93,7 @@ export default {
         data: []
       },
       func: {
+        currentNode: {},
         current: {},      // 当前选中的 function 节点
         data: [],         // 原始树
         dataFlatten: [],  // 扁平化树
@@ -123,8 +124,8 @@ export default {
     functionBtn() {
       return !this.role.current;
     },
-    checkPermissionAdd() {
-      return !(this.func.current.flag && this.func.current.type != 'NODE');
+    checkAddPermission() {
+      return !(this.func.currentNode.checked && this.func.current.type != 'NODE');
     },
     // checkPermissionSave() {
     //   return !(this.permission.unsave.length || this.permission.delete.length);
@@ -137,6 +138,10 @@ export default {
     },
     isRoleActived() {
       return !this.role.current
+    },
+    currentNodeType() {
+      let tips = this.func.current.type ? "选中节点类型：" + this.func.current.type : "未选中节点";
+      return "（" + tips + "）";
     }
   },
   methods: {
@@ -273,12 +278,23 @@ export default {
         this.recursionFunction(list[i].functions);
       }
     },
+    updateFunction: function (target = [], list = []) {
+      for (let i = 0; i < list.length; i++) {
+        list[i].flag = target.indexOf(list[i].id) != -1
+        // console.log(list[i].flag);
+      }
+    },
     functionCurrentChange(currentData, currentNode) {
       if (currentData && currentData.id) {
         this.func.current = currentData;
+        this.func.currentNode = currentNode;
         this.initPermission(this.role.current.id, this.func.current.id);
       }
     },
+    functionCheckChange: _.debounce(function (currentData, isChecked, isChildrenChecked) {
+      this.updateFunction(this.$refs.functionTree.getCheckedKeys(), this.func.dataFlatten);
+
+    }, 200),
     // functionCheckedSave() { // 保存 功能树的勾选状态
     //   let _checked = this.$refs.functionTree.getCheckedKeys(true);
     //   if (this.role.current) {
@@ -333,7 +349,7 @@ export default {
           return o.id == functionId;
         }).permissionList;
       }
-      console.log(this.permission.data);
+      // console.log(this.permission.data);
       // if (roleId && functionId) { // 不为空则异步请求数据
       //   Api.role_permission_list({
       //     'roleId': roleId,
