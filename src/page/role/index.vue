@@ -16,7 +16,7 @@
       <el-col :span="14" class="role-org">
         <div class="title">
           <span>角色名称：{{role.current.name}}</span>
-          <el-button :disabled="isRoleActived" type="primary" @click="editFunction">授权</el-button>
+          <el-button :disabled="isRoleActived" type="primary" @click="editFunction" v-loading.fullscreen.lock="fullscreenLoading">授权</el-button>
         </div>
         <div class="content">
           <el-table v-loading="loading" stripe border :data="func.table" ref="functionTable" style="width: 100%" highlight-current-row>
@@ -28,8 +28,8 @@
         </div>
       </el-col>
     </el-row>
-    <el-dialog class="dialog-function" title="授权" size="large" :visible.sync="dialogFunctionVisible">
-      <el-row>
+    <el-dialog  class="dialog-function" title="授权" size="large" :visible.sync="dialogFunctionVisible">
+      <el-row v-loading="dialogLoading">
         <el-col :span="8" class="role-function">
           <div class="title">
             <span>功能{{currentNodeType}}</span>
@@ -88,6 +88,8 @@ export default {
       dialogFunctionVisible: false,
       dialogPermissionVisible: false,
       loading: false,
+      fullscreenLoading: false,
+      dialogLoading: false,
       role: {
         current: {},
         data: []
@@ -201,16 +203,22 @@ export default {
         });
     },
     initFunction(roleId) { // 初始化 function 树
+      this.fullscreenLoading = true;
       Api.role_function_list({
         'roleId': roleId
       })
         .then(res => {// 请求成功
-          // 清除旧数据
-          this.resetFunction();
-          // 写入新数据
-          this.func.data = res.data;
-          // 打开对话框
-          this.openDialogFunction();
+          if (res.code == '1') {
+            this.fullscreenLoading = false;
+            // 清除旧数据
+            this.resetFunction();
+            // 写入新数据
+            this.func.data = res.data;
+            // 打开对话框
+            this.openDialogFunction();
+          } else {
+            throw new Error(res.message);
+          }
         })
         .then(() => {
           this.recursionFunction(this.func.data); // 递归树
@@ -220,12 +228,21 @@ export default {
         })
         .then(() => {
           this.initPermission(); // 初始化 permission
+        })
+        .catch(err => {
+          // error code
+          this.fullscreenLoading = false;
+          this.$message({
+            type: 'info',
+            message: err.message
+          });
         });
     },
     editFunction() {
       this.role.current.id && this.initFunction(this.role.current.id);
     },
     saveFunction() {
+      this.dialogLoading = true;
       Api.role_function_permission_save(this.func.dataFlatten)
         .then(res => {
           // console.log(res);
@@ -234,13 +251,20 @@ export default {
               type: 'success',
               message: res.message
             });
-            this.closeDialog();
+            this.closeDialogFunction();
           } else {
             throw new Error(res.message);
           }
         })
+        .then(() => {
+          this.dialogLoading = false;
+        })
+        .then(() => {
+          this.initFunctionTable(this.role.current.id);
+        })
         .catch(err => {
           // error code
+          this.dialogLoading = false;
           this.$message({
             type: 'info',
             message: err.message
@@ -398,7 +422,7 @@ export default {
         }
       });
     },
-    deletePpermission(index, row, rows) { // 删除 permission
+    deletePermission(index, row, rows) { // 删除 permission
       this.permission.data.splice(index, 1);
       // if (row.id) {
       //   this.permission.delete.push(row.id);
