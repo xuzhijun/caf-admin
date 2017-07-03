@@ -161,7 +161,7 @@ export default {
       })
         .then(resConfirm => {
           if (resConfirm == 'confirm') {
-            Api.org_delete({
+            return Api.org_delete({
               'OrgId': this.currentData.id
             });
           }

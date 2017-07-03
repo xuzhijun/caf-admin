@@ -204,13 +204,15 @@ export default {
         type: 'warning'
       })
         .then(resConfirm => {
+          console.log(resConfirm);
           if (resConfirm == 'confirm') {
-            Api.resource_delete({
+            return Api.resource_delete({
               'FunctionId': this.currentData.id
             });
           }
         })
         .then(resRemove => {
+          // console.log(resRemove);
           if (resRemove.code == '1') {
             this.$refs.tree.store.remove(this.currentData);
             this.currentData = null;

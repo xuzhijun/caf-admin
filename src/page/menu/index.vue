@@ -223,7 +223,7 @@ export default {
       })
         .then(resConfirm => {
           if (resConfirm == 'confirm') {
-            Api.menu_delete({
+            return Api.menu_delete({
               'menuId': this.currentData.id
             });
           }
