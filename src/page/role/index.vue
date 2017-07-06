@@ -251,13 +251,13 @@ export default {
               type: 'success',
               message: res.message
             });
-            this.closeDialogFunction();
           } else {
             throw new Error(res.message);
           }
         })
         .then(() => {
           this.dialogLoading = false;
+          this.closeDialogFunction();
         })
         .then(() => {
           this.initFunctionTable(this.role.current.id);

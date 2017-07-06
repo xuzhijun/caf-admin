@@ -33,7 +33,7 @@
         <el-form-item label="资源名称" prop="name" required>
           <el-input v-model="form.name"></el-input>
         </el-form-item>
-        <el-form-item label="URL" prop="url" required>
+        <el-form-item label="URL" prop="url" v-if="form.type!='NODE'">
           <el-input v-model="form.url"></el-input>
         </el-form-item>
       </el-form>

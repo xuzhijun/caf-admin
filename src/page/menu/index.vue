@@ -25,12 +25,12 @@
             </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="自定义编码" prop="codeInput" required v-show='!isEdit && form.isParent'>
+        <el-form-item label="自定义编码" prop="codeInput" required v-if='!isEdit && form.isParent'>
           <el-input v-model="form.codeInput"></el-input>
         </el-form-item>
-        <el-form-item label="编码" prop="codeSelect" required v-show='!isEdit && !form.isParent'>
+        <el-form-item label="编码" prop="codeSelect" required v-if='!isEdit && !form.isParent'>
           <el-select v-model="form.codeSelect" placeholder="请选择">
-            <el-option v-for="item in codeOptions" :key="item.id" :label="item.name" :value="item.id">
+            <el-option v-for="item in codeOptions" :key="item.id" :label="item.name" :value="item.code">
             </el-option>
           </el-select>
         </el-form-item>
@@ -91,10 +91,10 @@ export default {
           { required: true, message: '请输入菜单名称', trigger: 'blur' }
         ],
         'codeInput': [
-          { validator: validateCodeInput, trigger: 'change' }
+          { required: true, message: '请输入自定义编码', trigger: 'blur' }
         ],
         'codeSelect': [
-          { validator: validateCodeSelect, trigger: 'change' }
+          { required: true, message: '请选择编码', trigger: 'change' }
         ]
       },
       parentOptions: [],
