@@ -99,8 +99,10 @@ export default {
       this.form.parentId = parentId;
       this.form.name = name;
       this.form.code = code;
+      
+      this.initParent();
     },
-    submitForm() { // 提交表单
+    submitForm() {  // 提交表单
       this.$refs['orgForm'].validate((valid) => {
         if (valid) {
           let _promise = this.isEdit ? Api.org_edit(this.form) : Api.org_add(this.form);
@@ -117,9 +119,8 @@ export default {
                 throw new Error(res.message);
               }
             })
-            .then(res => {
+            .then(res => {  // 刷新树
               this.initTree();
-              this.initParent();
             })
             .catch(err => {
               // error code
@@ -131,7 +132,7 @@ export default {
         }
       });
     },
-    initParent() {
+    initParent() {  // 请求父菜单数据
       Api.org_options_parent()
         .then(res => {
           this.parentOptions = res.data;
@@ -203,7 +204,6 @@ export default {
   },
   mounted() {
     this.initTree();
-    this.initParent();
   }
 }
 </script>

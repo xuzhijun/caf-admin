@@ -14,7 +14,7 @@
         </el-tree>
       </el-col>
     </el-row>
-    <el-dialog title="菜单" :visible.sync="dialogFormVisible" @close="initForm">
+    <el-dialog title="菜单" :visible.sync="dialogFormVisible">
       <el-form ref="menuForm" :rules="formRules" label-position="right" label-width="120px" :model="form">
         <el-form-item v-show="!isEdit" label="父节点">
           <el-switch v-model="form.isParent" on-text="是" off-text="否"></el-switch>
@@ -124,14 +124,16 @@ export default {
       this.dialogFormVisible = false;
     },
     /* Form */
-    initForm({ // 初始化表单
+    initForm({  // 初始化表单
       id = '',
       code = '',
       icon = '',
       label = '',
       parentId = ''
     } = {}, isEdit = false, isParent = true) {
+      // 清空表单数据
       this.$refs['menuForm'] && this.$refs['menuForm'].resetFields();
+      // 设置表单值
       this.isEdit = isEdit;
       this.form.isParent = isParent;
       this.form.id = id;
@@ -140,8 +142,11 @@ export default {
       this.form.icon = icon;
       this.form.label = label;
       this.form.parentId = parentId;
+      // 初始化下拉框选项
+      this.initParent();
+      this.initCode();
     },
-    submitForm() {
+    submitForm() {  // 验证和提交表单
       this.$refs['menuForm'].validate((valid) => {
         if (valid) {
           let _code = this.form.isParent ? this.form.codeInput : this.form.codeSelect;
@@ -157,7 +162,7 @@ export default {
             label: this.form.label,
             parentId: this.form.parentId
           })
-
+          // 提交表单
           _promise
             .then(res => {
               // console.log(res);
@@ -171,10 +176,8 @@ export default {
                 throw new Error(res.message);
               }
             })
-            .then(res => {
+            .then(res => {  // 刷新树
               this.initTree();
-              this.initParent();
-              this.initCode();
             })
             .catch(err => {
               // error code
@@ -185,37 +188,37 @@ export default {
             });
         }
       });
-
     },
-    initParent() {
+    initParent() {  // 请求父菜单数据
       Api.menu_options_parent()
         .then(res => {
           this.parentOptions = res.data;
         });
     },
-    initCode() {
+    initCode() {    // 请求编码数据
       Api.menu_options_code()
         .then(res => {
           this.codeOptions = res.data;
         });
     },
     /* Tree */
-    initTree() { // 初始化 Tree 组件
+    initTree() {    // 初始化 Tree 组件
       Api.menu_list()
         .then(res => {
           this.treelist = res.data;
         });
     },
-    createNode() { // 创建节点
+    createNode() {  // 创建节点
       this.isEdit = false;
+      this.initForm();
       this.openDialog();
     },
-    modifyNode() { // 修改节点      
+    modifyNode() {  // 修改节点      
       this.isEdit = true;
       this.initForm(this.currentData, this.isEdit);
       this.openDialog();
     },
-    removeNode() { // 删除节点
+    removeNode() {  // 删除节点
       this.$confirm('将删除该节点, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -265,8 +268,6 @@ export default {
   },
   mounted() {
     this.initTree();
-    this.initParent();
-    this.initCode();
   }
 }
 </script>

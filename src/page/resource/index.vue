@@ -135,7 +135,7 @@ export default {
           });
           _promise
             .then(res => {
-              console.log(res);
+              // console.log(res);
               if (res.code == '1') {
                 this.$message({
                   type: 'success',
@@ -204,7 +204,7 @@ export default {
         type: 'warning'
       })
         .then(resConfirm => {
-          console.log(resConfirm);
+          // console.log(resConfirm);
           if (resConfirm == 'confirm') {
             return Api.resource_delete({
               'FunctionId': this.currentData.id

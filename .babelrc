@@ -1,13 +1,21 @@
 {
-  // "presets": ["vue-app"]
-  "presets": [
-    ["es2015", { "modules": false }]
-  ],
-  "plugins": ["transform-vue-jsx",
-  ["component", [
-    {
+  "presets": ["vue-app"],
+  // "presets": [
+  //   ["es2015", {
+  //     "modules": false
+  //   }]
+  // ],
+  "plugins": [
+    "transform-vue-jsx",
+     ["transform-runtime", {
+      "helpers": false,
+      "polyfill": false,
+      "regenerator": true,
+      "moduleName": "babel-runtime"
+    }],
+    ["component", [{
       "libraryName": "element-ui",
-      "styleLibraryName": "theme-default"
-    }
-  ]]]
+      "styleLibraryName": "~src/css/theme"
+    }]]
+  ]
 }

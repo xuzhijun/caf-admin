@@ -1,3 +1,4 @@
+var path = require('path')
 var utils = require('./utils')
 var webpack = require('webpack')
 var config = require('../config')
@@ -52,6 +53,21 @@ module.exports = merge(baseWebpackConfig, {
       template: 'src/index.html',
       inject: true,
       chunks: ['role/index', 'api', 'vendor', 'manifest']
+    }),
+    // split vendor js into its own file
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      chunks: ['vendor','promise'],
+      minChunks: function (module, count) {
+        // any required modules inside node_modules are extracted to vendor
+        return (
+          module.resource &&
+          /\.js$/.test(module.resource) &&
+          module.resource.indexOf(
+            path.join(__dirname, '../node_modules')
+          ) === 0
+        )
+      }
     }),
     new FriendlyErrorsPlugin()
   ]

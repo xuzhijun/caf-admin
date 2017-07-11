@@ -35,7 +35,21 @@
             <span>功能{{currentNodeType}}</span>
           </div>
           <div class="content">
-            <el-tree :data="func.data" node-key="id" ref="functionTree" highlight-current show-checkbox accordion current-node-key="id" :props="func.props" :render-content="renderFunctionContent" :expand-on-click-node="true" @current-change="functionCurrentChange" @check-change="functionCheckChange"></el-tree>
+            <el-tree 
+              node-key="id" 
+              ref="functionTree" 
+              highlight-current 
+              show-checkbox 
+              accordion 
+              current-node-key="id" 
+              :data="func.data" 
+              :props="func.props" 
+              :default-checked-keys="func.defaultChecked"
+              :render-content="renderFunctionContent" 
+              :expand-on-click-node="true" 
+              @current-change="functionCurrentChange" 
+              @check-change="functionCheckChange"
+            ></el-tree>
           </div>
         </el-col>
         <el-col :span="16" class="role-org">
@@ -100,6 +114,7 @@ export default {
         data: [],         // 原始树
         dataFlatten: [],  // 扁平化树
         dataChecked: [],  // 选中节点ID列表
+        defaultChecked: [], // 默认选中节点
         table: [],        // 扁平化选中树
         props: {
           children: 'functions',
@@ -216,15 +231,17 @@ export default {
             this.func.data = res.data;
             // 打开对话框
             this.openDialogFunction();
+
+            this.recursionFunction(this.func.data); // 递归树
+
+            this.func.defaultChecked = this.func.dataChecked; // 勾选打钩节点
           } else {
             throw new Error(res.message);
           }
         })
         .then(() => {
-          this.recursionFunction(this.func.data); // 递归树
         })
         .then(() => {
-          this.$refs.functionTree.setCheckedKeys(this.func.dataChecked); // 勾选打钩节点
         })
         .then(() => {
           this.initPermission(); // 初始化 permission
