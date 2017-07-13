@@ -28,28 +28,14 @@
         </div>
       </el-col>
     </el-row>
-    <el-dialog  class="dialog-function" title="授权" size="large" :visible.sync="dialogFunctionVisible">
+    <el-dialog class="dialog-function" title="授权" size="large" :visible.sync="dialogFunctionVisible">
       <el-row v-loading="dialogLoading">
         <el-col :span="8" class="role-function">
           <div class="title">
             <span>功能{{currentNodeType}}</span>
           </div>
           <div class="content">
-            <el-tree 
-              node-key="id" 
-              ref="functionTree" 
-              highlight-current 
-              show-checkbox 
-              accordion 
-              current-node-key="id" 
-              :data="func.data" 
-              :props="func.props" 
-              :default-checked-keys="func.defaultChecked"
-              :render-content="renderFunctionContent" 
-              :expand-on-click-node="true" 
-              @current-change="functionCurrentChange" 
-              @check-change="functionCheckChange"
-            ></el-tree>
+            <el-tree node-key="id" ref="functionTree" highlight-current show-checkbox accordion current-node-key="id" :data="func.data" :props="func.props" :default-checked-keys="func.defaultChecked" :render-content="renderFunctionContent" :expand-on-click-node="true" @current-change="functionCurrentChange" @check-change="functionCheckChange"></el-tree>
           </div>
         </el-col>
         <el-col :span="16" class="role-org">
@@ -70,10 +56,9 @@
             </el-table>
           </div>
         </el-col>
-  
       </el-row>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="closeDialog">取 消</el-button>
+        <el-button @click="closeDialogFunction">取 消</el-button>
         <el-button type="primary" @click="saveFunction">确 定</el-button>
       </div>
     </el-dialog>
@@ -515,13 +500,6 @@ body {
   overflow: hidden;
 }
 
-.el-table {
-  height: 100%;
-  .el-table__body-wrapper {
-    height: 100%;
-  }
-}
-
 .role-function {
   .el-tree {
     border: none;
@@ -560,6 +538,10 @@ body {
       margin-top: -30px;
     }
   }
+  .role-list,.role-org {
+    display: flex;
+    flex-direction: column;
+  }
   &:last-child {
     margin-bottom: 0;
   }
@@ -569,6 +551,15 @@ body {
     .el-col {
       height: 50%;
     }
+  }
+}
+
+.el-table {
+  height: 100%;
+  .el-table__body-wrapper {
+    position: absolute;
+    top: 40px;
+    bottom: 0;
   }
 }
 

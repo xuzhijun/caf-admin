@@ -190,6 +190,7 @@ export default {
     },
     createNode() { // 创建节点
       this.isEdit = false;
+      this.initForm();
       this.openDialog();
     },
     modifyNode() { // 修改节点

@@ -12,6 +12,7 @@ export function fetch(url = '', data = {}, type = 'GET', config = {}) {
         }
     };
     if (type == 'GET') {
+        data._t = new Date()*1; 
         Object.defineProperty(requestConfig, 'params', {
             enumerable: true, // 在自定义配置的时候，必须设置为可枚举
             value: data
