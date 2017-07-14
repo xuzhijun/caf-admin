@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="full">
     <el-row :gutter="24" type="flex">
-      <el-col :span="10" class="role-list">
+      <el-col :span="10" class="role-table">
         <div class="title">
           <span>角色</span>
         </div>
@@ -13,7 +13,7 @@
           </el-table>
         </div>
       </el-col>
-      <el-col :span="14" class="role-org">
+      <el-col :span="14" class="function-table">
         <div class="title">
           <span>角色名称：{{role.current.name}}</span>
           <el-button :disabled="isRoleActived" type="primary" @click="editFunction" v-loading.fullscreen.lock="fullscreenLoading">授权</el-button>
@@ -29,8 +29,8 @@
       </el-col>
     </el-row>
     <el-dialog class="dialog-function" title="授权" size="large" :visible.sync="dialogFunctionVisible">
-      <el-row v-loading="dialogLoading">
-        <el-col :span="8" class="role-function">
+      <el-row v-loading="dialogLoading" type="flex">
+        <el-col :span="8" class="function-tree">
           <div class="title">
             <span>功能{{currentNodeType}}</span>
           </div>
@@ -38,13 +38,13 @@
             <el-tree node-key="id" ref="functionTree" highlight-current show-checkbox accordion current-node-key="id" :data="func.data" :props="func.props" :default-checked-keys="func.defaultChecked" :render-content="renderFunctionContent" :expand-on-click-node="true" @current-change="functionCurrentChange" @check-change="functionCheckChange"></el-tree>
           </div>
         </el-col>
-        <el-col :span="16" class="role-org">
+        <el-col :span="16" class="permission-table">
           <div class="title">
             <span>属性（NODE类型节点不能添加属性）</span>
             <el-button :disabled="checkAddPermission" type="primary" size="small" @click="addPermission">新增</el-button>
           </div>
           <div class="content">
-            <el-table stripe border ref="permissionTable" :data="permission.data" style="width: 100%" highlight-current-row>
+            <el-table stripe ref="permissionTable" :data="permission.data" style="width: 100%" highlight-current-row>
               <el-table-column prop="proName" label="属性名"></el-table-column>
               <el-table-column prop="value" label="属性值"></el-table-column>
               <el-table-column label="操作">
@@ -208,7 +208,7 @@ export default {
         'roleId': roleId
       })
         .then(res => {// 请求成功
-          if (res.code == '1') {
+          // if (res.code == '1') {
             this.fullscreenLoading = false;
             // 清除旧数据
             this.resetFunction();
@@ -220,9 +220,9 @@ export default {
             this.recursionFunction(this.func.data); // 递归树
 
             this.func.defaultChecked = this.func.dataChecked; // 勾选打钩节点
-          } else {
-            throw new Error(res.message);
-          }
+          // } else {
+          //   throw new Error(res.message);
+          // }
         })
         .then(() => {
         })
@@ -369,7 +369,7 @@ export default {
       this.permission.current = {};
       // this.permission.unsave = [];
       // this.permission.delete = [];
-      // console.log(this.func.dataFlatten);
+      console.log(functionId);
       if (functionId) {
         this.permission.data = _.find(this.func.dataFlatten, function (o) {
           return o.id == functionId;
@@ -500,7 +500,7 @@ body {
   overflow: hidden;
 }
 
-.role-function {
+.function-tree {
   .el-tree {
     border: none;
   }
@@ -538,7 +538,10 @@ body {
       margin-top: -30px;
     }
   }
-  .role-list,.role-org {
+  .role-table,
+  .function-table,
+  .function-tree,
+  .permission-table {
     display: flex;
     flex-direction: column;
   }
