@@ -23,7 +23,7 @@
           <el-input v-model="form.name"></el-input>
         </el-form-item>
         <el-form-item label="父机构" prop="parentId" v-show="isLeaf">
-          <el-select v-model="form.parentId" placeholder="请选择">
+          <el-select clearable filterable v-model="form.parentId" placeholder="请选择">
             <el-option v-for="item in parentOptions" :disabled="form.id===item.id" :key="item.id" :label="item.name" :value="item.id">
             </el-option>
           </el-select>
@@ -170,7 +170,8 @@ export default {
         })
         .then(resRemove => {
           if (resRemove.code == '1') {
-            this.$refs.tree.store.remove(this.currentData);
+            // this.$refs.tree.store.remove(this.currentData);
+            this.initTree();
             this.currentData = null;
             this.$message({
               type: 'success',

@@ -208,7 +208,7 @@ export default {
         'roleId': roleId
       })
         .then(res => {// 请求成功
-          // if (res.code == '1') {
+          if (res.code == '1') {
             this.fullscreenLoading = false;
             // 清除旧数据
             this.resetFunction();
@@ -220,9 +220,9 @@ export default {
             this.recursionFunction(this.func.data); // 递归树
 
             this.func.defaultChecked = this.func.dataChecked; // 勾选打钩节点
-          // } else {
-          //   throw new Error(res.message);
-          // }
+          } else {
+            throw new Error(res.message);
+          }
         })
         .then(() => {
         })
@@ -245,6 +245,7 @@ export default {
     },
     saveFunction() {
       this.dialogLoading = true;
+      console.log(this.func.dataFlatten);
       Api.role_function_permission_save(this.func.dataFlatten)
         .then(res => {
           // console.log(res);

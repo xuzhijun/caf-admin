@@ -20,7 +20,7 @@
           <el-switch v-model="form.isParent" on-text="是" off-text="否"></el-switch>
         </el-form-item>
         <el-form-item label="父菜单" v-show="isLeaf" prop="parentId">
-          <el-select v-model="form.parentId" placeholder="请选择">
+          <el-select clearable filterable v-model="form.parentId" placeholder="请选择">
             <el-option v-for="item in parentOptions" :disabled="form.id===item.id" :key="item.id" :label="item.label" :value="item.id">
             </el-option>
           </el-select>
@@ -29,7 +29,7 @@
           <el-input v-model="form.codeInput"></el-input>
         </el-form-item>
         <el-form-item label="编码" prop="codeSelect" required v-if='!isEdit && !form.isParent'>
-          <el-select v-model="form.codeSelect" placeholder="请选择">
+          <el-select clearable filterable v-model="form.codeSelect" placeholder="请选择">
             <el-option v-for="item in codeOptions" :key="item.id" :label="item.name" :value="item.code">
             </el-option>
           </el-select>
@@ -38,7 +38,7 @@
           <el-input v-model="form.label"></el-input>
         </el-form-item>
         <el-form-item label="图标" prop="icon">
-          <el-input v-model="form.icon"></el-input>
+          <el-input v-model="form.icon"></el-input><span>图标参考：http://fontawesome.io/icons/</span>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -233,7 +233,8 @@ export default {
         })
         .then(resRemove => {
           if (resRemove.code == '1') {
-            this.$refs.tree.store.remove(this.currentData);
+            // this.$refs.tree.store.remove(this.currentData);
+            this.initTree();
             this.currentData = null;
             this.$message({
               type: 'success',
