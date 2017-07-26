@@ -1,18 +1,33 @@
 import axios from 'axios'
 import qs from 'qs'
 
+export function getRootPath() {
+    var pathName = window
+        .location
+        .pathname
+        .substring(1);
+    var webName = pathName == ''
+        ? ''
+        : pathName.substring(0, pathName.indexOf('/'));
+    if (webName == '') {
+        return window.location.protocol + '//' + window.location.host + '';
+    } else {
+        return window.location.protocol + '//' + window.location.host + '/' + webName + '';
+    }
+}
 export function fetch(url = '', data = {}, type = 'GET', config = {}) {
     type = type.toUpperCase();
     let requestConfig = {
         'url': url,
         'method': type,
-        'baseURL': '/caf-template-admin',
+        'baseURL': getRootPath(),
+        // 'baseURL': '/api',
         'headers': {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
         }
     };
     if (type == 'GET') {
-        data._t = new Date()*1; 
+        data._t = new Date() * 1;
         Object.defineProperty(requestConfig, 'params', {
             enumerable: true, // 在自定义配置的时候，必须设置为可枚举
             value: data

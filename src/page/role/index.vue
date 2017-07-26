@@ -245,7 +245,7 @@ export default {
     },
     saveFunction() {
       this.dialogLoading = true;
-      console.log(this.func.dataFlatten);
+      // console.log(this.func.dataFlatten);
       Api.role_function_permission_save(this.func.dataFlatten)
         .then(res => {
           // console.log(res);
@@ -306,6 +306,7 @@ export default {
       }
     },
     updateFunction: function (target = [], list = []) {
+      // console.log(target);
       for (let i = 0; i < list.length; i++) {
         list[i].flag = target.indexOf(list[i].id) != -1
         // console.log(list[i].flag);
@@ -319,7 +320,7 @@ export default {
       }
     },
     functionCheckChange: _.debounce(function (currentData, isChecked, isChildrenChecked) {
-      this.updateFunction(this.$refs.functionTree.getCheckedKeys(), this.func.dataFlatten);
+      this.updateFunction(this.$refs.functionTree.getCheckedKeys(true), this.func.dataFlatten);
 
     }, 200),
     // functionCheckedSave() { // 保存 功能树的勾选状态
@@ -370,7 +371,7 @@ export default {
       this.permission.current = {};
       // this.permission.unsave = [];
       // this.permission.delete = [];
-      console.log(functionId);
+      // console.log(functionId);
       if (functionId) {
         this.permission.data = _.find(this.func.dataFlatten, function (o) {
           return o.id == functionId;
