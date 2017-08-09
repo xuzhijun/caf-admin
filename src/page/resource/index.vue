@@ -10,7 +10,7 @@
         </el-button-group>
       </el-col>
       <el-col :span="24" class="content">
-        <el-tree :data="treelist" empty-text="加载中..." node-key="id" ref="tree" highlight-current :props="defaultProps" :expand-on-click-node="false" @current-change="setCurrentChange" :render-content="renderContent"></el-tree>
+        <el-tree v-loading="loading" :data="treelist" node-key="id" ref="tree" highlight-current :props="defaultProps" :expand-on-click-node="false" @current-change="setCurrentChange" :render-content="renderContent"></el-tree>
       </el-col>
     </el-row>
     <el-dialog ref="resourceDialog" :title="dialogTitle" :visible.sync="dialogFormVisible" @close="initForm">
@@ -50,6 +50,7 @@ import Api from '../../api'
 export default {
   data() {
     return {
+      loading: false,
       treelist: [],
       defaultProps: {
         children: 'nodes',
@@ -179,11 +180,16 @@ export default {
     },
     /* Tree */
     initTree() { // 初始化 Tree 组件
+      this.loading = true; 
       Api.resource_list()
         .then(res => {
           this.treelist = res.data;
         })
+        .then(() => {
+          this.loading = false;
+        })
         .catch(err => {
+          this.loading = false;
           // console.log(err)
           // 加载树失败
         });

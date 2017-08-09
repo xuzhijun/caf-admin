@@ -10,7 +10,7 @@
         </el-button-group>
       </el-col>
       <el-col :span="24" class="content">
-        <el-tree :data="treelist" node-key="id" ref="tree" highlight-current :props="defaultProps" :render-content="renderContent" :expand-on-click-node="false" @current-change="setCurrentChange">
+        <el-tree v-loading="loading" :data="treelist" node-key="id" ref="tree" highlight-current :props="defaultProps" :render-content="renderContent" :expand-on-click-node="false" @current-change="setCurrentChange">
         </el-tree>
       </el-col>
     </el-row>
@@ -68,6 +68,7 @@ export default {
       }
     };
     return {
+      loading: false,
       treelist: [],
       defaultProps: {
         children: 'nodes',
@@ -203,9 +204,18 @@ export default {
     },
     /* Tree */
     initTree() {    // 初始化 Tree 组件
+      this.loading = true;
       Api.menu_list()
         .then(res => {
           this.treelist = res.data;
+        })
+        .then(() => {
+          this.loading = false;
+        })
+        .catch(err => {
+          this.loading = false;
+          // console.log(err)
+          // 加载树失败
         });
     },
     createNode() {  // 创建节点
