@@ -10,7 +10,7 @@
         </el-button-group>
       </el-col>
       <el-col :span="24" class="content">
-        <el-tree v-loading="loading" :data="treelist" node-key="id" ref="tree" highlight-current :props="defaultProps" :render-content="renderContent" :expand-on-click-node="false" @current-change="setCurrentChange">
+        <el-tree v-loading="loading" :data="treelist" node-key="id" ref="tree" highlight-current :props="defaultProps" :render-content="renderContent" @current-change="setCurrentChange">
         </el-tree>
       </el-col>
     </el-row>
@@ -36,6 +36,9 @@
         </el-form-item>
         <el-form-item label="菜单名称" prop="label" required>
           <el-input v-model="form.label"></el-input>
+        </el-form-item>
+        <el-form-item label="排序数" prop="menuSort">
+          <el-input v-model.number="form.menuSort" placeholder="请输入 1-100 之间的整数"></el-input>
         </el-form-item>
         <el-form-item label="图标" prop="icon">
           <el-input v-model="form.icon"></el-input><span>图标参考：http://fontawesome.io/icons/</span>
@@ -67,6 +70,22 @@ export default {
         callback();
       }
     };
+    var checkSort = (rule, value, callback) => {
+        if (value!==0 && !value) {
+          return callback(new Error('排序数不能为空'));
+        }
+        setTimeout(() => {
+          if (!Number.isInteger(value)) {
+            callback(new Error('请输入数字值'));
+          } else {
+            if (value < 0 || value > 18) {
+              callback(new Error('必须在 0-100 之间'));
+            } else {
+              callback();
+            }
+          }
+        }, 1000);
+      };
     return {
       loading: false,
       treelist: [],
@@ -79,6 +98,7 @@ export default {
       currentData: null,
       form: {
         isParent: true,
+        menuSort: 0,
         id: '',
         code: '',
         codeInput: '',
@@ -90,6 +110,9 @@ export default {
       formRules: {
         'label': [
           { required: true, message: '请输入菜单名称', trigger: 'blur' }
+        ],
+        'menuSort': [
+          { validator: checkSort, trigger: 'blur' }
         ],
         'codeInput': [
           { required: true, message: '请输入自定义编码', trigger: 'blur' }
@@ -127,6 +150,7 @@ export default {
     /* Form */
     initForm({  // 初始化表单
       id = '',
+      menuSort = 0,
       code = '',
       icon = '',
       label = '',
@@ -138,6 +162,7 @@ export default {
       this.isEdit = isEdit;
       this.form.isParent = isParent;
       this.form.id = id;
+      this.form.menuSort = menuSort;
       this.form.codeInput = code;
       this.form.codeSelect = code;
       this.form.icon = icon;
@@ -153,12 +178,14 @@ export default {
           let _code = this.form.isParent ? this.form.codeInput : this.form.codeSelect;
           let _promise = this.isEdit ? Api.menu_edit({
             id: this.form.id,
+            menuSort: this.form.menuSort,
             code: _code,
             icon: this.form.icon,
             label: this.form.label,
             parentId: this.form.parentId
           }) : Api.menu_add({
             code: _code,
+            menuSort: this.form.menuSort,
             icon: this.form.icon,
             label: this.form.label,
             parentId: this.form.parentId

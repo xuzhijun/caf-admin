@@ -10,7 +10,7 @@
         </el-button-group>
       </el-col>
       <el-col :span="24" class="content">
-        <el-tree v-loading="loading" :data="treelist" node-key="id" ref="tree" highlight-current :props="defaultProps" :render-content="renderContent" :expand-on-click-node="false" @current-change="setCurrentChange">
+        <el-tree v-loading="loading" :data="treelist" node-key="id" ref="tree" highlight-current :props="defaultProps" :render-content="renderContent" @current-change="setCurrentChange">
         </el-tree>
       </el-col>
     </el-row>

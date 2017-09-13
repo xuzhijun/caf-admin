@@ -10,7 +10,7 @@
         </el-button-group>
       </el-col>
       <el-col :span="24" class="content">
-        <el-tree v-loading="loading" :data="treelist" node-key="id" ref="tree" highlight-current :props="defaultProps" :expand-on-click-node="false" @current-change="setCurrentChange" :render-content="renderContent"></el-tree>
+        <el-tree v-loading="loading" :data="treelist" node-key="id" ref="tree" highlight-current :props="defaultProps" @current-change="setCurrentChange" :render-content="renderContent"></el-tree>
       </el-col>
     </el-row>
     <el-dialog ref="resourceDialog" :title="dialogTitle" :visible.sync="dialogFormVisible" @close="initForm">
