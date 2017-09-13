@@ -48,9 +48,17 @@ export function fetch(url = '', data = {}, type = 'GET', config = {}) {
     }
     return new Promise((resolve, reject) => {
         axios(requestConfig).then(res => {
-            resolve(res.data);
+            if(res.status === 200) {
+                resolve(res.data)
+            } else if(res.status === 403) {
+                throw res.status
+            }
         }).catch(err => {
-            reject(err);
+            if(err===403) {
+                window.confirm("用户已经超时注销，请重新登录")
+            } else {
+                reject(err);
+            }
         });
     })
 }
@@ -131,5 +139,8 @@ export default {
                 'Content-Type': 'application/json;charset=UTF-8'
             }
         })
-    }
+    },
+    role_reload_to_redis : function (data) {
+        return fetch('/roleFunToRedis/reload', data)
+    },
 }
