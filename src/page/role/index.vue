@@ -16,6 +16,7 @@
       <el-col :span="14" class="function-table">
         <div class="title">
           <span>角色名称：{{role.current.name}}</span>
+          <el-button type="primary" @click="reloadToRedisFunction">刷新缓存</el-button>
           <el-button :disabled="isRoleActived" type="primary" @click="editFunction" v-loading.fullscreen.lock="fullscreenLoading">授权</el-button>
         </div>
         <div class="content">

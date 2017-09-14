@@ -78,7 +78,7 @@ export default {
           if (!Number.isInteger(value)) {
             callback(new Error('请输入数字值'));
           } else {
-            if (value < 0 || value > 18) {
+            if (value < 0 || value > 100) {
               callback(new Error('必须在 0-100 之间'));
             } else {
               callback();

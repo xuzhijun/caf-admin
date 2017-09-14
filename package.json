@@ -5,7 +5,6 @@
   "private": true,
   "scripts": {
     "mock": "json-server src/mock/db.json",
-    "et": "node config/et.js",
     "server": "node build/dev-server.js",
     "dev": "npm run mock & npm run server",
     "build": "rimraf dist && node --trace-deprecation build/build.js"

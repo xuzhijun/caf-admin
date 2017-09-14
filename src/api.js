@@ -48,6 +48,7 @@ export function fetch(url = '', data = {}, type = 'GET', config = {}) {
     }
     return new Promise((resolve, reject) => {
         axios(requestConfig).then(res => {
+            // console.log(res.status)
             if(res.status === 200) {
                 resolve(res.data)
             } else if(res.status === 403) {
