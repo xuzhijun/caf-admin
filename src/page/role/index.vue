@@ -180,28 +180,6 @@ export default {
       }
     },
     /* 功能 */
-    reloadToRedisFunction () {
-      Api.role_reload_to_redis()
-        .then(res => {
-          console.log(res);
-          if (res.code == '1') {
-            this.$message({
-              type: 'success',
-              message: res.message
-            });
-          } else {
-            throw new Error(res.message);
-          }
-        })
-        .catch(err => {
-          console.log(err);
-          // error code
-          this.$message({
-            type: 'info',
-            message: err.message
-          });
-        });
-    },
     resetFunction() {
       this.func.current = {};       // 当前选中的 function 节点
       this.func.data = [];          // 原始树

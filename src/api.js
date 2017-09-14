@@ -139,8 +139,5 @@ export default {
                 'Content-Type': 'application/json;charset=UTF-8'
             }
         })
-    },
-    role_reload_to_redis : function (data) {
-        return fetch('/roleFunToRedis/reload', data)
-    },
+    }
 }
