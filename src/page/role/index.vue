@@ -184,7 +184,7 @@ export default {
     reloadToRedisFunction () {
       Api.role_reload_to_redis()
         .then(res => {
-          console.log(res);
+          // console.log(res);
           if (res.code == '1') {
             this.$message({
               type: 'success',
@@ -195,7 +195,7 @@ export default {
           }
         })
         .catch(err => {
-          console.log(err);
+          // console.log(err);
           // error code
           this.$message({
             type: 'info',
