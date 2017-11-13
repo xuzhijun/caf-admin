@@ -20,8 +20,8 @@ export function fetch(url = '', data = {}, type = 'GET', config = {}) {
     let requestConfig = {
         'url': url,
         'method': type,
-        'baseURL': getRootPath(),
-        // 'baseURL': '/api',
+        // 'baseURL': getRootPath(),
+        'baseURL': '/api',
         'headers': {
             'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
         }

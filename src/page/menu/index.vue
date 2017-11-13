@@ -311,8 +311,8 @@ export default {
 </script>
 
 <style lang="scss">
-body {
-  font-family: Helvetica, sans-serif;
+body, html, input, textarea, select, button {
+  font-family: "Helvetica Neue",Helvetica,"Microsoft YaHei","微软雅黑","PingFang SC","Hiragino Sans GB",Arial,sans-serif;
 }
 
 .el-row {
