@@ -12,10 +12,10 @@ var extractCSS = new ExtractTextPlugin({
   filename: utils.assetsPath('css/caf-vue/style.css'),
   allChunks: true
 });
-var extractSASS = new ExtractTextPlugin({
-  filename: utils.assetsPath('css/caf-vue/icon.css'),
-  allChunks: true
-});
+// var extractSASS = new ExtractTextPlugin({
+//   filename: utils.assetsPath('css/caf-vue/icon.css'),
+//   allChunks: true
+// });
 var env = config.build.env
 var webpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -28,11 +28,11 @@ var webpackConfig = merge(baseWebpackConfig, {
         })
       }, {
         test: /\.scss$/,
-        // use: ['style-loader', 'css-loader', 'sass-loader']
-        use: extractSASS.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader']
-        })
+        use: ['style-loader', 'css-loader', 'sass-loader']
+        // use: extractSASS.extract({
+        //   fallback: 'style-loader',
+        //   use: ['css-loader', 'sass-loader']
+        // })
       }]
     
   },
@@ -47,7 +47,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       'process.env': env
     }),
     extractCSS,
-    extractSASS,
+    // extractSASS,
     // extract css into its own file
     // new ExtractTextPlugin({
     //   filename: utils.assetsPath('css/[name].[contenthash].css')
@@ -68,28 +68,28 @@ var webpackConfig = merge(baseWebpackConfig, {
       filename: 'html/resource/index.html',
       template: 'src/index.html',
       inject: true,
-      chunks: ['resource/index', 'api', 'vendor', 'manifest']
+      chunks: ['resource/index', 'store', 'api', 'vendor', 'manifest']
     }),
     new HtmlWebpackPlugin({
       title: '菜单',
       filename: 'html/menu/index.html',
       template: 'src/index.html',
       inject: true,
-      chunks: ['menu/index', 'api', 'vendor', 'manifest']
+      chunks: ['menu/index', 'store', 'api', 'vendor', 'manifest']
     }),
     new HtmlWebpackPlugin({
       title: '机构',
       filename: 'html/org/index.html',
       template: 'src/index.html',
       inject: true,
-      chunks: ['org/index', 'api', 'vendor', 'manifest']
+      chunks: ['org/index', 'store', 'api', 'vendor', 'manifest']
     }),
     new HtmlWebpackPlugin({
       title: '授权',
       filename: 'html/role/index.html',
       template: 'src/index.html',
       inject: true,
-      chunks: ['role/index', 'api', 'vendor', 'manifest']
+      chunks: ['role/index', 'store', 'api', 'vendor', 'manifest']
     }),
     // split vendor js into its own file
     new webpack.optimize.CommonsChunkPlugin({

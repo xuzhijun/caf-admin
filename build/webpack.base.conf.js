@@ -10,6 +10,7 @@ module.exports = {
   entry: {
     'vendor': './src/vendor',
     'api': './src/api',
+    'store': './src/store/index',
     // 'index': './src/page/index/index', 'resource/indexOld':
     // './src/page/resource/indexOld',
     'resource/index': './src/page/resource/index',

@@ -1,0 +1,31 @@
+// [class*=" el-icon-fa"],
+// [class^=el-icon-] {
+//   font-family: FontAwesome!important;
+//   speak: none;
+//   font-style: normal;
+//   font-weight: 400;
+//   font-variant: normal;
+//   text-transform: none;
+//   line-height: 1;
+//   vertical-align: baseline;
+//   display: inline-block;
+//   -webkit-font-smoothing: antialiased;
+//   -moz-osx-font-smoothing: grayscale;
+// }
+// font-awesome: Concatenates with '/' between path and font name.
+$fa-font-path: '~font-awesome/fonts';
+$fa-css-prefix: el-icon-fa;
+
+@import '~font-awesome/scss/font-awesome';
+
+[class^='#{$fa-css-prefix}-'], [class*=' #{$fa-css-prefix}-'] {
+  width: 32px;
+  text-align: right;
+  margin-right: 10px;
+  display: inline-block;
+  font: normal normal normal #{$fa-font-size-base}/#{$fa-line-height-base} FontAwesome !important;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

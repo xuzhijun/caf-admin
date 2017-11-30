@@ -40,8 +40,15 @@
         <el-form-item label="排序数" prop="menuSort">
           <el-input v-model.number="form.menuSort" placeholder="请输入 1-100 之间的整数"></el-input>
         </el-form-item>
-        <el-form-item label="图标" prop="icon">
-          <el-input v-model="form.icon"></el-input><span>图标参考：http://fontawesome.io/icons/</span>
+        <el-form-item label="图标">
+          <el-col :lg="18" :md="16" :sm="12" :xs="24">
+            <el-form-item prop="icon">
+              <el-input :readonly="true" v-model="form.icon" :icon="icon"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :lg="6" :md="8" :sm="12" :xs="24">
+            <el-button type="primary" icon="menu" @click="openIconList">选择图标</el-button>
+          </el-col>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -49,11 +56,19 @@
         <el-button type="primary" @click="submitForm">确 定</el-button>
       </div>
     </el-dialog>
+    <el-dialog title="选择图标" size="large" :visible.sync="dialogIconsVisible">
+      <el-tabs v-model="activeName" type="card">
+        <el-tab-pane label="Font-Awesome" name="fa">
+          <caf-icons type="fa"></caf-icons>
+        </el-tab-pane>
+      </el-tabs>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import Api from '../../api'
+import Icons from '../../component/icons/icons.vue'
 export default {
   data() {
     var validateCodeInput = (rule, value, callback) => {
@@ -94,8 +109,10 @@ export default {
         label: 'label'
       },
       dialogFormVisible: false,
+      dialogIconsVisible: false,
       isEdit: false,
       currentData: null,
+      activeName: 'fa',
       form: {
         isParent: true,
         menuSort: 0,
@@ -137,6 +154,14 @@ export default {
     },
     isLeaf: function () { // 新增状态，或者编辑状态下的叶子节点，可以显示父菜单下拉框
       return !this.isEdit || (this.isEdit && this.currentData.leaf)
+    },
+    icon: function () {
+      this.closeIconList();
+      if(this.$store.state.icon!='') {
+        this.form.icon = 'fa ' + this.$store.state.icon
+      }
+      return this.$store.state.icon;
+      
     }
   },
   methods: {
@@ -146,6 +171,12 @@ export default {
     },
     closeDialog() {
       this.dialogFormVisible = false;
+    },
+    openIconList() {
+      this.dialogIconsVisible = true
+    },
+    closeIconList() {
+      this.dialogIconsVisible = false
     },
     /* Form */
     initForm({  // 初始化表单
@@ -158,6 +189,7 @@ export default {
     } = {}, isEdit = false, isParent = true) {
       // 清空表单数据
       this.$refs['menuForm'] && this.$refs['menuForm'].resetFields();
+      this.$store.commit('setIcon','');
       // 设置表单值
       this.isEdit = isEdit;
       this.form.isParent = isParent;
@@ -306,6 +338,9 @@ export default {
   },
   mounted() {
     this.initTree();
+  },
+  components: {
+    'caf-icons': Icons
   }
 }
 </script>
