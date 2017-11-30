@@ -46,8 +46,8 @@
               <el-input :readonly="true" v-model="form.icon" :icon="icon"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :lg="6" :md="8" :sm="12" :xs="24">
-            <el-button type="primary" icon="menu" @click="openIconList">选择图标</el-button>
+          <el-col :lg="6" :md="8" :sm="12" :xs="24" style="text-align:right;">
+            <el-button class="btnSelectIcon" type="primary" icon="menu" @click="openIconList">选择图标</el-button>
           </el-col>
         </el-form-item>
       </el-form>
