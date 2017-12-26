@@ -11,12 +11,13 @@
 </template>
 <script>
 import Icon from './icon.vue'
+import {fetch} from '../../api'
 export default {
     data: function() {
         return {
             prefix: '',
             iconsAll: {
-                'fa': require('./font-awesome.json')
+                'fa': {}
             },
             iconGroups: []
         }
@@ -25,9 +26,18 @@ export default {
     components: {
         'caf-icon': Icon
     },
+    methods: {
+        getData() {
+            fetch('shareCompon/getFA')
+            .then(data => {
+                this.iconsAll.fa = data
+                this.prefix = this.type;
+                this.iconGroups = this.iconsAll[this.type] ? this.iconsAll[this.type] : []
+            })
+        }
+    },
     created() {
-        this.prefix = this.type;
-        this.iconGroups = this.iconsAll[this.type] ? this.iconsAll[this.type] : []
+        this.getData();
     }
 }
 </script>

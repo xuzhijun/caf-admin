@@ -245,7 +245,7 @@ export default {
     },
     saveFunction() {
       this.dialogLoading = true;
-      // console.log(this.func.dataFlatten);
+      console.log(this.func.dataFlatten);
       Api.role_function_permission_save(this.func.dataFlatten)
         .then(res => {
           // console.log(res);
